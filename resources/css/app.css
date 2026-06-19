@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #006837;
+    --color-primary-dark: #00522a;
+    --color-sidebar: #0d2d1f;
+    --color-gold: #fecb00;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+}

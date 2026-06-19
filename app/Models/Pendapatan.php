@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+
+class Pendapatan extends Model
+{
+    use SoftDeletes;
+
+    protected $table = 'pendapatan';
+
+    protected $fillable = [
+        'tahun_anggaran_id',
+        'kategori_pendapatan_id',
+        'nama_sumber',
+        'jumlah_rencana',
+        'jumlah_realisasi',
+        'keterangan',
+        'created_by',
+        'updated_by',
+    ];
+
+    public function tahunAnggaran(): BelongsTo
+    {
+        return $this->belongsTo(TahunAnggaran::class);
+    }
+
+    public function kategoriPendapatan(): BelongsTo
+    {
+        return $this->belongsTo(KategoriPendapatan::class);
+    }
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updater(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function transaksi(): MorphMany
+    {
+        return $this->morphMany(Transaksi::class, 'transaksable');
+    }
+}
