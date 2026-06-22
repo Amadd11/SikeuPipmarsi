@@ -1,5 +1,5 @@
 <x-guest-layout>
-    @section('title', 'Masuk')
+    @section('title', 'Login SikeuPIPMARSI')
 
     <div style="font-family: 'Poppins', sans-serif;">
 
@@ -23,7 +23,7 @@
             </div>
 
             <div>
-                <div class="flex justify-between items-center">
+                {{-- <div class="flex justify-between items-center">
                     <x-input-label for="password" :value="__('Kata Sandi')" />
                     @if (Route::has('password.request'))
                         <a href="{{ route('password.request') }}"
@@ -31,7 +31,7 @@
                             Lupa kata sandi?
                         </a>
                     @endif
-                </div>
+                </div> --}}
                 <x-text-input id="password" name="password" type="password" class="mt-2 block w-full"
                     placeholder="••••••••" required autocomplete="current-password" />
                 <x-input-error :messages="$errors->get('password')" class="mt-1.5" />

@@ -10,7 +10,7 @@
     {{-- Poppins Font --}}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet" />
-        
+
     {{-- Material Icons --}}
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
@@ -50,12 +50,8 @@
             class="fixed inset-0 z-40 bg-black/50 lg:hidden" style="display: none;">
         </div>
 
-        {{-- Sidebar Area (Sekarang dibungkus logika responsive) --}}
-        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-            class="fixed inset-y-0 left-0 z-50 w-72 bg-[#0a2419] text-white flex flex-col h-full shadow-xl transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 lg:flex">
-            <x-sidebar />
-        </aside>
-
+        <x-sidebar />
+        
         {{-- Main Area --}}
         <div class="flex-1 flex flex-col overflow-hidden">
 

@@ -21,12 +21,12 @@ class TahunAnggaran extends Model
 
     public function pendapatan(): HasMany
     {
-        return $this->hasMany(Pendapatan::class);
+        return $this->hasMany(RencanaPendapatan::class);
     }
 
     public function pengeluaran(): HasMany
     {
-        return $this->hasMany(Pengeluaran::class);
+        return $this->hasMany(RencanaPengeluaran::class);
     }
 
     public function transaksi(): HasMany

@@ -20,10 +20,6 @@ return new class extends Migration
             $table->tinyInteger('urutan')->default(0);
             $table->timestamps();
         });
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreign('bidang_kerja_id')->references('id')->on('bidang_kerja')->onDelete('set null');
-        });
     }
 
     /**
@@ -31,9 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['bidang_kerja_id']);
-        });
         Schema::dropIfExists('bidang_kerja');
     }
 };

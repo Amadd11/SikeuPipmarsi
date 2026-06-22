@@ -2,16 +2,23 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\KategoriPendapatan;
 use Illuminate\Database\Seeder;
 
 class KategoriPendapatanSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
+        $kategoris = [
+            'Iuran Anggota',
+            'Dana Pemerintah / Hibah',
+            'Donasi / Sponsor',
+            'Usaha Organisasi',
+            'Lain-lain',
+        ];
+
+        foreach ($kategoris as $kategori) {
+            KategoriPendapatan::create(['nama' => $kategori]);
+        }
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class Pendapatan extends Model
+class RencanaPendapatan extends Model
 {
     use SoftDeletes;
 
@@ -20,8 +20,7 @@ class Pendapatan extends Model
         'jumlah_rencana',
         'jumlah_realisasi',
         'keterangan',
-        'created_by',
-        'updated_by',
+        'status',
     ];
 
     public function tahunAnggaran(): BelongsTo
@@ -32,16 +31,6 @@ class Pendapatan extends Model
     public function kategoriPendapatan(): BelongsTo
     {
         return $this->belongsTo(KategoriPendapatan::class);
-    }
-
-    public function creator(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function updater(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'updated_by');
     }
 
     public function transaksi(): MorphMany

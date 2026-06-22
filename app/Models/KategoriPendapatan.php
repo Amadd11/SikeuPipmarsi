@@ -15,6 +15,6 @@ class KategoriPendapatan extends Model
 
     public function pendapatan(): HasMany
     {
-        return $this->hasMany(Pendapatan::class);
+        return $this->hasMany(RencanaPendapatan::class);
     }
 }

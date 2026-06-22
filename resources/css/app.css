@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-    --color-primary: #006837;
-    --color-primary-dark: #00522a;
-    --color-sidebar: #0d2d1f;
-    --color-gold: #fecb00;
+    --color-primary: #6d28d9; 
+    --color-primary-dark: #5b21b6; 
+    --color-sidebar: #2e1065; 
+    --color-gold: #facc15;
 }
 
 .scrollbar-hide {
