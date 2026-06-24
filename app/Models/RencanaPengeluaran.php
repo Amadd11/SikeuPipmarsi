@@ -22,8 +22,6 @@ class RencanaPengeluaran extends Model
         'jumlah_anggaran',
         'jumlah_realisasi',
         'keterangan',
-        'created_by',
-        'updated_by',
     ];
 
     public function tahunAnggaran(): BelongsTo

@@ -5,40 +5,38 @@ namespace App\Services;
 use App\Models\KategoriPendapatan;
 use App\Models\RencanaPendapatan;
 use App\Models\TahunAnggaran;
+use App\Repositories\RencanaPendapatanRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class RencanaPendapatanService
 {
-    // -------------------------------------------------------------------------
-    // READ
-    // -------------------------------------------------------------------------
+    public function __construct(
+        protected RencanaPendapatanRepository $repository
+    ) {}
 
-    /**
-     * Ambil daftar rencana pendapatan untuk tahun anggaran aktif.
-     */
-    public function getListByTahunAktif(int $perPage = 10): LengthAwarePaginator
-    {
+    public function getListByTahunAktif(
+        int $perPage = 10
+    ): LengthAwarePaginator {
+
         $tahunAktif = $this->getTahunAktifOrFail();
 
-        return RencanaPendapatan::with(['kategoriPendapatan', 'tahunAnggaran'])
-            ->where('tahun_anggaran_id', $tahunAktif->id)
-            ->latest()
-            ->paginate($perPage);
+        return $this->repository->getList(
+            $tahunAktif->id,
+            $perPage
+        );
     }
 
-    /**
-     * Hitung ringkasan total rencana, realisasi, dan sisa untuk tahun aktif.
-     */
     public function getSummaryByTahunAktif(): array
     {
         $tahunAktif = $this->getTahunAktifOrFail();
 
-        $totalRencana = RencanaPendapatan::where('tahun_anggaran_id', $tahunAktif->id)
-            ->sum('jumlah_rencana');
+        $summary = $this->repository->getSummary(
+            $tahunAktif->id
+        );
 
-        $totalRealisasi = RencanaPendapatan::where('tahun_anggaran_id', $tahunAktif->id)
-            ->sum('jumlah_realisasi');
+        $totalRencana   = (float) ($summary->total_rencana ?? 0);
+        $totalRealisasi = (float) ($summary->total_realisasi ?? 0);
 
         return [
             'totalRencana'   => $totalRencana,
@@ -47,36 +45,28 @@ class RencanaPendapatanService
         ];
     }
 
-    /**
-     * Data untuk dropdown create/edit form.
-     */
     public function getFormOptions(): array
     {
         return [
-            'kategoriList'     => KategoriPendapatan::orderBy('nama')->get(),
-            'tahunAnggaranList' => TahunAnggaran::orderByDesc('tahun')->get(),
+            'kategoriList' => KategoriPendapatan::query()
+                ->orderBy('nama')
+                ->get(),
+
+            'tahunAnggaranList' => TahunAnggaran::query()
+                ->orderByDesc('tahun')
+                ->get(),
         ];
     }
 
-    // -------------------------------------------------------------------------
-    // WRITE
-    // -------------------------------------------------------------------------
+    public function store(
+        array $validated
+    ): RencanaPendapatan {
 
-    /**
-     * Simpan rencana pendapatan baru.
-     * Dibungkus DB::transaction karena:
-     * - Ada dua langkah: resolve tahun aktif + insert record.
-     * - Mencegah data tersimpan setengah jalan jika ada exception setelah
-     *   validasi bisnis lolos (misal: constraint DB, trigger, dll).
-     *
-     * @throws \Exception jika tahun anggaran aktif tidak ditemukan
-     */
-    public function store(array $validated): RencanaPendapatan
-    {
         return DB::transaction(function () use ($validated) {
+
             $tahunAktif = $this->getTahunAktifOrFail();
 
-            return RencanaPendapatan::create([
+            return $this->repository->create([
                 'tahun_anggaran_id'      => $tahunAktif->id,
                 'kategori_pendapatan_id' => $validated['kategori_pendapatan_id'],
                 'nama_sumber'            => $validated['nama_sumber'],
@@ -87,37 +77,44 @@ class RencanaPendapatanService
         });
     }
 
-    public function update(RencanaPendapatan $pendapatan, array $validated): RencanaPendapatan
-    {
+    public function update(
+        RencanaPendapatan $pendapatan,
+        array $validated
+    ): RencanaPendapatan {
+
         return DB::transaction(function () use ($pendapatan, $validated) {
 
-            $pendapatan->update([
-                'kategori_pendapatan_id' => $validated['kategori_pendapatan_id'],
-                'nama_sumber'            => $validated['nama_sumber'],
-                'keterangan'             => $validated['keterangan'] ?? null,
-                'jumlah_rencana'         => $validated['jumlah_rencana'],
-            ]);
-
-            return $pendapatan->refresh();
+            return $this->repository->update(
+                $pendapatan,
+                [
+                    'kategori_pendapatan_id' => $validated['kategori_pendapatan_id'],
+                    'nama_sumber'            => $validated['nama_sumber'],
+                    'keterangan'             => $validated['keterangan'] ?? null,
+                    'jumlah_rencana'         => $validated['jumlah_rencana'],
+                ]
+            );
         });
     }
 
-    /**
-     * Hapus rencana pendapatan.
-     */
-    public function destroy(RencanaPendapatan $pendapatan): void
-    {
+    public function destroy(
+        RencanaPendapatan $pendapatan
+    ): void {
+
         DB::transaction(function () use ($pendapatan) {
-            $pendapatan->delete();
+            $this->repository->delete($pendapatan);
         });
     }
 
     private function getTahunAktifOrFail(): TahunAnggaran
     {
-        $tahunAktif = TahunAnggaran::query()->where('is_aktif', true)->first();
+        $tahunAktif = TahunAnggaran::query()
+            ->where('is_aktif', true)
+            ->first();
 
         if (!$tahunAktif) {
-            throw new \Exception('Tahun anggaran aktif belum tersedia. Harap konfigurasi terlebih dahulu.');
+            throw new \Exception(
+                'Tahun anggaran aktif belum tersedia. Harap konfigurasi terlebih dahulu.'
+            );
         }
 
         return $tahunAktif;

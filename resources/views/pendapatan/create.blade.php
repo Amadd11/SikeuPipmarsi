@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot:title>Tambah Pendapatan</x-slot>
+    <x-slot:title>Rencana Pendapatan</x-slot>
 
     {{-- Header --}}
     <div class="border-b border-gray-100 pb-6">

@@ -8,35 +8,35 @@
     class="fixed inset-y-0 left-0 z-50 w-72 bg-linear-to-b from-indigo-950 via-[#161436] to-[#0b091a] text-white flex flex-col h-full overflow-hidden shadow-2xl transition-all duration-300 ease-in-out 
            lg:static lg:translate-x-0 lg:flex lg:rounded-r-3xl lg:border-r lg:border-white/5 border-r border-white/5">
 
-    {{-- Logo & Header --}}
-    <div class="relative px-6 pt-8 pb-6 border-b border-white/5 bg-white/5 shrink-0">
+    {{-- Logo & Header (Dibuat lebih compact) --}}
+    <div class="relative px-5 pt-6 pb-5 border-b border-white/5 bg-white/5 shrink-0">
 
         {{-- Tombol Close (Hanya di Mobile) --}}
         <button @click="sidebarOpen = false" aria-label="Tutup Menu"
-            class="absolute top-4 right-4 text-indigo-300 hover:text-gold lg:hidden transition-colors">
-            <span class="material-symbols-outlined">close</span>
+            class="absolute top-3 right-3 text-indigo-300 hover:text-gold lg:hidden transition-colors">
+            <span class="material-symbols-outlined text-xl">close</span>
         </button>
 
-        <div class="flex items-center gap-3">
-            {{-- Ikon Logo dengan Warna Kuning Emas (Gold) --}}
+        <div class="flex items-center gap-2.5">
+            {{-- Ikon Logo (Diperkecil dari w-10 ke w-8) --}}
             <div
-                class="w-10 h-10 bg-linear-to-br from-gold to-yellow-300 rounded-2xl flex items-center justify-center shadow-[0_0_15px_rgba(234,179,8,0.2)] shrink-0">
-                <span class="material-symbols-outlined text-[#0b091a] text-3xl font-bold">account_balance</span>
+                class="w-8 h-8 bg-linear-to-br from-gold to-yellow-300 rounded-xl flex items-center justify-center shadow-[0_0_12px_rgba(234,179,8,0.2)] shrink-0">
+                <span class="material-symbols-outlined text-[#0b091a] text-[20px] font-bold">account_balance</span>
             </div>
-            <div>
-                <span class="text-2xl font-black tracking-tighter text-white">SIKEU</span>
-                <span class="text-2xl font-black tracking-tighter text-gold">PIPMARSI</span>
+
+            <div class="leading-none">
+                <span class="text-xl font-black text-white">SIKEU</span>
+                <span class="text-xl font-black text-gold">PIPMARSI</span>
             </div>
         </div>
 
-        <p class="text-xs text-indigo-200/50 mt-1 tracking-widest font-medium">
+        <p class="text-[10px] text-indigo-200/50 mt-1.5 tracking-[0.15em] font-medium">
             SISTEM INFORMASI KEUANGAN
         </p>
 
-        {{-- Badge Tahun Anggaran nuansa Emas --}}
         <div
-            class="mt-4 inline-flex items-center gap-2 bg-gold/10 border border-gold/10 text-gold text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
-            <span class="w-2 h-2 bg-gold rounded-full animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.6)]"></span>
+            class="mt-3 inline-flex items-center gap-1.5 bg-gold/10 border border-gold/10 text-gold text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-sm">
+            <span class="w-1.5 h-1.5 bg-gold rounded-full animate-pulse shadow-[0_0_6px_rgba(234,179,8,0.6)]"></span>
             TA {{ date('Y') }}
         </div>
     </div>
@@ -62,7 +62,7 @@
             <x-nav-link href="{{ route('pendapatan.index') }}" icon="payments" :active="request()->routeIs('pendapatan.index')">
                 Rencana Pendapatan
             </x-nav-link>
-            <x-nav-link href="#" icon="receipt_long" :active="request()->routeIs('rencana-pengeluaran.*')">
+            <x-nav-link href="{{ route('pengeluaran.index') }}" icon="receipt_long" :active="request()->routeIs('pengeluaran.index')">
                 Rencana Pengeluaran
             </x-nav-link>
             <x-nav-link href="#" icon="sync_alt" :active="request()->routeIs('aktivitas-realisasi.*')">

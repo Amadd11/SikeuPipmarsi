@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             KategoriPendapatanSeeder::class,
             KategoriPengeluaranSeeder::class,
             RencanaPendapatanSeeder::class,
+            RencanaPengeluaranSeeder::class,
             UserSeeder::class,
         ]);
     }

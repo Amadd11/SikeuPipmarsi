@@ -27,9 +27,9 @@ class BidangKerja extends Model
         return $this->hasMany(IndikatorMutu::class);
     }
 
-    public function pengeluaran(): HasMany
+    public function rencanaPengeluaran(): HasMany
     {
-        return $this->hasMany(Pengeluaran::class);
+        return $this->hasMany(RencanaPengeluaran::class);
     }
 
     public function transaksi(): HasMany

@@ -3,7 +3,9 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RencanaPendapatanController;
+use App\Http\Controllers\RencanaPengeluaranController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -15,6 +17,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
     Route::resource('pendapatan', RencanaPendapatanController::class)->except('show');
+    Route::resource('pengeluaran', RencanaPengeluaranController::class)->except('show');
 });
 
 Route::middleware('auth')->group(function () {

@@ -1,15 +1,8 @@
 <x-app-layout>
-    <x-slot:title>Edit Pendapatan</x-slot>
+    <x-slot:title>Rencana Pendapatan</x-slot>
 
     {{-- Header --}}
     <div class="border-b border-gray-100 pb-6">
-
-        <a href="{{ route('pendapatan.index') }}"
-            class="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-primary transition mb-3">
-            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-            Kembali ke Rencana Pendapatan
-        </a>
-
         <h2 class="text-lg font-semibold text-gray-900">
             Edit Pendapatan
         </h2>
