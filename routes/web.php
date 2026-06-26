@@ -4,7 +4,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RencanaPendapatanController;
 use App\Http\Controllers\RencanaPengeluaranController;
+use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -18,6 +20,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('dashboard');
     Route::resource('pendapatan', RencanaPendapatanController::class)->except('show');
     Route::resource('pengeluaran', RencanaPengeluaranController::class)->except('show');
+    Route::resource('transaksi', TransaksiController::class)->except('show');
 });
 
 Route::middleware('auth')->group(function () {

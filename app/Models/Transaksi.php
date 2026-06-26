@@ -24,8 +24,13 @@ class Transaksi extends Model
         'transaksable_id',
         'jumlah',
         'nomor_bukti',
-        'dicatat_oleh',
-        'created_by',
+        'file_bukti',
+        'user_id',
+    ];
+
+    protected $casts = [
+        'tanggal' => 'date',
+        'jumlah'  => 'decimal:2',
     ];
 
     public function tahunAnggaran(): BelongsTo
@@ -43,8 +48,17 @@ class Transaksi extends Model
         return $this->morphTo();
     }
 
-    public function creator(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class);
+    }
+
+    public function getJenisLabelAttribute(): string
+    {
+        return match ($this->jenis) {
+            'pemasukan'  => 'Pendapatan',
+            'pengeluaran' => 'Pengeluaran',
+            default  => '-',
+        };
     }
 }

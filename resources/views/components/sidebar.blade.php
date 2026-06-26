@@ -65,7 +65,7 @@
             <x-nav-link href="{{ route('pengeluaran.index') }}" icon="receipt_long" :active="request()->routeIs('pengeluaran.index')">
                 Rencana Pengeluaran
             </x-nav-link>
-            <x-nav-link href="#" icon="sync_alt" :active="request()->routeIs('aktivitas-realisasi.*')">
+            <x-nav-link href="{{ route('transaksi.index') }}" icon="sync_alt" :active="request()->routeIs('transaksi.index')">
                 Aktivitas & Realisasi
             </x-nav-link>
         </div>

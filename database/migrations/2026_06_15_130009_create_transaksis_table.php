@@ -16,13 +16,14 @@ return new class extends Migration
             $table->string('kode_transaksi', 30)->unique();
             $table->foreignId('tahun_anggaran_id')->constrained('tahun_anggaran');
             $table->date('tanggal');
-            $table->enum('jenis', ['masuk', 'keluar']);
+            $table->enum('jenis', ['pemasukan', 'pengeluaran']);
             $table->string('uraian', 300);
             $table->foreignId('bidang_kerja_id')->nullable()->constrained('bidang_kerja')->onDelete('set null');
             $table->nullableMorphs('transaksable');
             $table->decimal('jumlah', 15, 2);
             $table->string('nomor_bukti', 50)->nullable();
-            $table->string('dicatat_oleh', 100)->nullable();
+            $table->string('file_bukti')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->softDeletes();
             $table->timestamps();
         });

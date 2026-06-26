@@ -78,9 +78,23 @@
 
                     @forelse ($pendapatan as $row)
                         @php
-                            $persen = $row['rencana'] > 0 ? round(($row['realisasi'] / $row['rencana']) * 100) : 0;
-                            $sisa = $row['rencana'] - $row['realisasi'];
-                            $status = $persen >= 100 ? 'Tercapai' : ($persen > 0 ? 'Sebagian' : 'Belum');
+                            // PERBAIKAN: Gunakan pemanggilan properti yang benar (jumlah_rencana & jumlah_realisasi)
+                            $rencana = $row->jumlah_rencana ?? 0;
+                            $realisasi = $row->jumlah_realisasi ?? 0;
+
+                            $persen = $rencana > 0 ? round(($realisasi / $rencana) * 100) : 0;
+                            $sisa = $rencana - $realisasi;
+
+                            // Logika 4 Status Progress
+                            if ($persen >= 100) {
+                                $status = 'Tercapai';
+                            } elseif ($persen >= 71) {
+                                $status = 'Hampir';
+                            } elseif ($persen > 0) {
+                                $status = 'Sebagian';
+                            } else {
+                                $status = 'Belum';
+                            }
                         @endphp
 
                         <tr class="hover:bg-gray-50/70 transition">
@@ -129,6 +143,11 @@
                                 @if ($status === 'Tercapai')
                                     <span
                                         class="inline-flex px-2 py-0.5 rounded-md bg-green-100 text-green-700 text-[10px] font-semibold tracking-wide">
+                                        {{ $status }}
+                                    </span>
+                                @elseif ($status === 'Hampir')
+                                    <span
+                                        class="inline-flex px-2 py-0.5 rounded-md bg-blue-100 text-blue-700 text-[10px] font-semibold tracking-wide">
                                         {{ $status }}
                                     </span>
                                 @elseif ($status === 'Sebagian')

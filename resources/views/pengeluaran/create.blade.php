@@ -42,7 +42,7 @@
                         Tahun Anggaran <span class="text-red-500">*</span>
                     </label>
                     <select name="tahun_anggaran_id"
-                        class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-white @error('tahun_anggaran_id') border-red-300 @enderror">
+                        class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-white @error('tahun_anggaran_id') @enderror">
                         <option value="">Pilih tahun anggaran</option>
                         @foreach ($tahunAnggaranList as $tahun)
                             <option value="{{ $tahun->id }}" @selected(old('tahun_anggaran_id') == $tahun->id || $tahun->is_aktif)>
@@ -61,7 +61,7 @@
                         Bidang Kerja <span class="text-red-500">*</span>
                     </label>
                     <select name="bidang_kerja_id"
-                        class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-white @error('bidang_kerja_id') border-red-300 @enderror">
+                        class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-white @error('bidang_kerja_id') @enderror">
                         <option value="">Pilih bidang kerja</option>
                         @foreach ($bidangKerjaList as $bidang)
                             <option value="{{ $bidang->id }}" @selected(old('bidang_kerja_id') == $bidang->id)>

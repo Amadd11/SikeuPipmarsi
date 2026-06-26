@@ -44,16 +44,6 @@ class RencanaPengeluaran extends Model
         return $this->belongsTo(IndikatorMutu::class);
     }
 
-    public function creator(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function updater(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'updated_by');
-    }
-
     public function transaksi(): MorphMany
     {
         return $this->morphMany(Transaksi::class, 'transaksable');
