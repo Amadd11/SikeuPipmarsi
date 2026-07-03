@@ -17,6 +17,7 @@ class TransaksiStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'kode_transaksi'    => 'nullable|string|max:30|unique:transaksi,kode_transaksi',
             'tahun_anggaran_id' => 'required|exists:tahun_anggaran,id',
             'tanggal'           => 'required|date',
             'jenis'             => 'required|in:pemasukan,pengeluaran',
@@ -36,6 +37,7 @@ class TransaksiStoreRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'kode_transaksi'    => 'Kode Transaksi',
             'tahun_anggaran_id' => 'Tahun Anggaran',
             'tanggal'           => 'Tanggal Transaksi',
             'jenis'             => 'Jenis Transaksi',

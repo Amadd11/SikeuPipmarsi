@@ -26,6 +26,12 @@ class TransaksiUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'kode_transaksi'    => [
+                'nullable',
+                'string',
+                'max:30',
+                Rule::unique('transaksi', 'kode_transaksi')->ignore($this->route('transaksi')),
+            ],
             'tahun_anggaran_id' => 'required|exists:tahun_anggaran,id',
             'tanggal'           => 'required|date',
             'jenis'             => 'required|in:pemasukan,pengeluaran',
@@ -45,6 +51,7 @@ class TransaksiUpdateRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'kode_transaksi'    => 'Kode Transaksi',
             'tahun_anggaran_id' => 'Tahun Anggaran',
             'tanggal'           => 'Tanggal Transaksi',
             'jenis'             => 'Jenis Transaksi',

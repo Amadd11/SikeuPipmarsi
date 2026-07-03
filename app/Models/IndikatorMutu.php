@@ -15,13 +15,10 @@ class IndikatorMutu extends Model
         'bidang_kerja_id',
         'nama',
         'target',
-        'periode_evaluasi',
+        'periode',
+        'status',
+        'catatan',
         'urutan',
-        'is_aktif',
-    ];
-
-    protected $casts = [
-        'is_aktif' => 'boolean',
     ];
 
     public function bidangKerja(): BelongsTo
@@ -31,11 +28,16 @@ class IndikatorMutu extends Model
 
     public function pengeluaran(): HasMany
     {
-        return $this->hasMany(Pengeluaran::class);
+        return $this->hasMany(RencanaPengeluaran::class);
     }
 
     public function capaianIndikator(): HasMany
     {
         return $this->hasMany(CapaianIndikator::class);
+    }
+
+    public function auditMonitoring(): HasMany
+    {
+        return $this->hasMany(AuditMonitoring::class);
     }
 }

@@ -12,7 +12,9 @@ use App\Models\Transaksi;
 use App\Services\TransaksiService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 class TransaksiController extends Controller
@@ -29,13 +31,20 @@ class TransaksiController extends Controller
             TahunAnggaran::query()->where('is_aktif', true)->first()
         )->id;
 
-        $filters = $request->only(['jenis', 'bidang_kerja_id', 'tanggal_dari', 'tanggal_sampai']);
+        $filters = $request->only(['jenis', 'bidang_kerja_id', 'tanggal_dari', 'tanggal_sampai', 'search']);
 
         // Belum ada Tahun Anggaran aktif/terpilih — tampilkan halaman kosong
         // daripada lempar TypeError ke service.
         if (!$tahunAnggaranId) {
+            // Buat paginator kosong agar view tidak error saat memanggil ->hasPages(), dll.
+            $emptyPaginator = new LengthAwarePaginator(
+                new Collection(),
+                0,
+                15
+            );
+
             return view('transaksi.index', [
-                'transaksi'         => $this->service->emptyList(),
+                'transaksi'         => $emptyPaginator,
                 'tahunAnggaranList' => $tahunAnggaranList,
                 'activeTahun'       => null,
                 'filters'           => $filters,

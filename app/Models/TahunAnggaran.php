@@ -38,4 +38,9 @@ class TahunAnggaran extends Model
     {
         return $this->hasMany(CapaianIndikator::class);
     }
+
+    public function auditMonitoring(): HasMany
+    {
+        return $this->hasMany(AuditMonitoring::class);
+    }
 }

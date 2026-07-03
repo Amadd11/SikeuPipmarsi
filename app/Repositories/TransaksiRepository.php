@@ -22,7 +22,7 @@ class TransaksiRepository
             ->when($filters['tanggal_sampai'] ?? null, fn($q, $v) => $q->whereDate('tanggal', '<=', $v))
             ->when($filters['search'] ?? null, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
-                    $q->where('kode', 'like', '%' . $search . '%')
+                    $q->where('kode_transaksi', 'like', '%' . $search . '%')
                         ->orWhere('uraian', 'like', '%' . $search . '%');
                 });
             })
