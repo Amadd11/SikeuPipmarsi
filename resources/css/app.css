@@ -1,15 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-    /* Ungu dari sisi luar lingkaran logo */
-    --color-primary: #9333ea; /* Tailwind Purple 600 */
-    --color-primary-dark: #7e22ce; /* Tailwind Purple 700 */
+    /* Primary tetap ungu untuk link, focus, dll */
+    --color-primary: #9333ea;
+    --color-primary-dark: #7e22ce;
 
-    --color-sidebar: #3b0764; /* Tailwind Purple 900 */
+    /* Sidebar ungu gelap */
+    --color-sidebar: #4c1d95;
 
-    --color-gold: #facc15; /* Tailwind Yellow 400 */
+    /* Warna utama tombol */
+    --color-gold: #facc15;
+    --color-gold-dark: #eab308;
 
-    /* Aksen opsional: Merah PIP-MARSI untuk badge/tombol penting */
+    /* Warna aksen */
     --color-accent-red: #ef4444;
 }
 

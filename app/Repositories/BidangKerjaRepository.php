@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\BidangKerja;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class BidangKerjaRepository
@@ -10,6 +11,32 @@ class BidangKerjaRepository
     public function getAll(): Collection
     {
         return BidangKerja::query()->orderBy('nama')->get();
+    }
+
+    public function getPaginated(?string $search = null, int $perPage = 15): LengthAwarePaginator
+    {
+        return BidangKerja::query()
+            ->when($search, fn($q) => $q->where('nama', 'like', "%{$search}%")
+                ->orWhere('kode', 'like', "%{$search}%"))
+            ->orderBy('urutan')
+            ->orderBy('nama')
+            ->paginate($perPage);
+    }
+
+    public function create(array $data): BidangKerja
+    {
+        return BidangKerja::create($data);
+    }
+
+    public function update(BidangKerja $bidangKerja, array $data): BidangKerja
+    {
+        $bidangKerja->update($data);
+        return $bidangKerja->fresh();
+    }
+
+    public function delete(BidangKerja $bidangKerja): void
+    {
+        $bidangKerja->delete();
     }
 
     public function getRingkasan(int $tahunAnggaranId): Collection

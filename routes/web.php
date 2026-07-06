@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuditMonitoringController;
+use App\Http\Controllers\BidangKerjaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndikatorMutuController;
 use App\Http\Controllers\ProfileController;
@@ -34,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'role:super_admin'])->group(function () {
     Route::resource('users', UserController::class)->except('show');
+    Route::resource('bidang-kerja', BidangKerjaController::class)->except('show');
 });
 
 Route::middleware('auth')->group(function () {

@@ -108,6 +108,9 @@
             <x-nav-link href="{{ route('users.index') }}" icon="manage_accounts" :active="request()->routeIs('users.*')">
                 Manajemen User
             </x-nav-link>
+            <x-nav-link href="{{ route('bidang-kerja.index') }}" icon="category" :active="request()->routeIs('bidang-kerja.*')">
+                Bidang Kerja
+            </x-nav-link>
         </div>
         @endrole
     </nav>
