@@ -64,10 +64,8 @@ class RencanaPendapatanService
 
         return DB::transaction(function () use ($validated) {
 
-            $tahunAktif = $this->getTahunAktifOrFail();
-
             return $this->repository->create([
-                'tahun_anggaran_id'      => $tahunAktif->id,
+                'tahun_anggaran_id'      => $validated['tahun_anggaran_id'],
                 'kategori_pendapatan_id' => $validated['kategori_pendapatan_id'],
                 'nama_sumber'            => $validated['nama_sumber'],
                 'keterangan'             => $validated['keterangan'] ?? null,

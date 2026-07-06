@@ -25,7 +25,7 @@
         </div>
 
         <a href="{{ route('standar-tarif.create') }}"
-            class="inline-flex items-center justify-center gap-1.5 bg-primary text-white px-3.5 py-2 rounded-xl text-xs font-medium hover:bg-primary-dark transition">
+            class="inline-flex items-center gap-2 bg-gold text-gray-900 px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-gold-dark hover:shadow-md transition-all duration-200 active:scale-95">
             <span class="material-symbols-outlined text-[16px]">upload_file</span>
             Upload Standar Tarif
         </a>
@@ -42,13 +42,13 @@
             </div>
             <div class="flex gap-2">
                 <button type="submit"
-                    class="inline-flex items-center gap-1.5 bg-primary text-white px-4 py-2 rounded-xl text-xs font-medium hover:bg-primary-dark transition">
-                    <span class="material-symbols-outlined text-[15px]">search</span>
+                    class="inline-flex items-center gap-1.5 bg-gold text-gray-900 px-4 py-2 rounded-full text-xs font-semibold shadow-sm hover:bg-gold-dark hover:shadow transition-all duration-200 active:scale-95">
+                    <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1">search</span>
                     Cari
                 </button>
                 @if ($search)
                     <a href="{{ route('standar-tarif.index') }}"
-                        class="inline-flex items-center gap-1.5 bg-gray-100 text-gray-600 px-4 py-2 rounded-xl text-xs font-medium hover:bg-gray-200 transition">
+                        class="inline-flex items-center gap-1.5 bg-white text-gray-500 px-4 py-2 rounded-full text-xs font-medium border border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 active:scale-95">
                         <span class="material-symbols-outlined text-[15px]">close</span>
                         Reset
                     </a>
@@ -145,7 +145,7 @@
                                         <span class="material-symbols-outlined text-[16px]">visibility</span>
                                     </a>
                                     <a href="{{ route('standar-tarif.edit', $item->id) }}"
-                                        class="w-7 h-7 rounded-md border border-gray-200 flex items-center justify-center text-gray-500 hover:border-primary hover:text-primary transition"
+                                        class="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-indigo-50 hover:border-indigo-300 hover:text-indigo-600 transition-all duration-200"
                                         title="Edit">
                                         <span class="material-symbols-outlined text-[16px]">edit</span>
                                     </a>
@@ -154,7 +154,7 @@
                                             action: '{{ route('standar-tarif.destroy', $item->id) }}',
                                             message: 'Yakin ingin menghapus standar tarif {{ addslashes($item->nama) }}? File PDF juga akan ikut terhapus.'
                                         })"
-                                        class="w-7 h-7 rounded-md border border-red-200 flex items-center justify-center text-red-500 hover:bg-red-50 transition"
+                                        class="w-8 h-8 rounded-full bg-red-50/50 border border-red-200 flex items-center justify-center text-red-400 hover:bg-red-100 hover:border-red-400 hover:text-red-600 transition-all duration-200"
                                         title="Hapus">
                                         <span class="material-symbols-outlined text-[16px]">delete</span>
                                     </button>
@@ -171,7 +171,7 @@
                                     <h3 class="font-medium text-gray-700 text-sm">Belum ada standar tarif</h3>
                                     <p class="text-xs text-gray-500">Upload dokumen standar tarif pertama dalam format PDF.</p>
                                     <a href="{{ route('standar-tarif.create') }}"
-                                        class="mt-2 inline-flex items-center gap-1.5 bg-primary text-white px-3.5 py-2 rounded-xl text-xs font-medium hover:bg-primary-dark transition">
+                                        class="mt-3 inline-flex items-center gap-2 bg-gold text-gray-900 px-5 py-2 rounded-full text-xs font-semibold shadow hover:bg-gold-dark hover:shadow-md transition-all duration-200 active:scale-95">
                                         <span class="material-symbols-outlined text-[16px]">upload_file</span>
                                         Upload Sekarang
                                     </a>

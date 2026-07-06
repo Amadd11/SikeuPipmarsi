@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <a href="{{ Storage::url($standarTarif->file) }}" target="_blank"
-                        class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-primary text-white text-xs font-medium rounded-xl hover:bg-primary-dark transition">
+                        class="inline-flex items-center gap-2 bg-gold text-gray-900 px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-gold-dark hover:shadow-md transition-all duration-200 active:scale-95">
                         <span class="material-symbols-outlined text-[15px]">open_in_new</span>
                         Buka di Tab Baru
                     </a>
@@ -72,7 +72,7 @@
                             <span class="material-symbols-outlined text-5xl text-gray-300 mb-3">picture_as_pdf</span>
                             <p class="text-sm text-gray-500 mb-3">Browser Anda tidak mendukung preview PDF.</p>
                             <a href="{{ Storage::url($standarTarif->file) }}" target="_blank"
-                                class="inline-flex items-center gap-1.5 bg-primary text-white px-4 py-2 rounded-xl text-xs font-medium hover:bg-primary-dark transition">
+                                class="inline-flex items-center gap-1.5 bg-gold text-gray-900 px-4 py-2 rounded-full text-xs font-semibold shadow-sm hover:bg-gold-dark hover:shadow transition-all duration-200 active:scale-95">
                                 <span class="material-symbols-outlined text-[16px]">download</span>
                                 Unduh PDF
                             </a>

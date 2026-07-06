@@ -49,7 +49,7 @@
 
             {{-- Tombol Tambah --}}
             <a href="{{ route('transaksi.create') }}"
-                class="inline-flex items-center justify-center gap-1.5 bg-primary text-white px-3.5 py-2 rounded-xl text-xs font-medium hover:bg-emerald-800 transition shadow-sm">
+                class="inline-flex items-center gap-2 bg-gold text-gray-900 px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-gold-dark hover:shadow-md transition-all duration-200 active:scale-95">
                 <span class="material-symbols-outlined text-[16px]">add</span>
                 Catat Transaksi
             </a>
@@ -191,7 +191,7 @@
                             <td class="px-4 py-2.5 align-top">
                                 <div class="flex items-center justify-center gap-1.5">
                                     <a href="{{ route('transaksi.edit', $row->id) }}" title="Edit Transaksi"
-                                        class="w-7 h-7 rounded-md border border-gray-200 flex items-center justify-center text-gray-500 hover:border-primary hover:text-primary transition">
+                                        class="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-indigo-50 hover:border-indigo-300 hover:text-indigo-600 transition-all duration-200">
                                         <span class="material-symbols-outlined text-[16px]">edit</span>
                                     </a>
 
@@ -201,7 +201,7 @@
                                             message: 'Yakin ingin membatalkan dan menghapus transaksi {{ $row->kode_transaksi }}?'
                                         })"
                                         title="Hapus Transaksi"
-                                        class="w-7 h-7 rounded-md border border-red-200 flex items-center justify-center text-red-500 hover:bg-red-50 transition">
+                                        class="w-8 h-8 rounded-full bg-red-50/50 border border-red-200 flex items-center justify-center text-red-400 hover:bg-red-100 hover:border-red-400 hover:text-red-600 transition-all duration-200">
                                         <span class="material-symbols-outlined text-[16px]">delete</span>
                                     </button>
                                 </div>

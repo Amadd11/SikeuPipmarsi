@@ -52,6 +52,9 @@
             <x-nav-link href="{{ route('dashboard') }}" icon="dashboard" :active="request()->routeIs('dashboard')">
                 Dashboard
             </x-nav-link>
+            <x-nav-link href="{{ route('standar-tarif.index') }}" icon="description" :active="request()->routeIs('standar-tarif.*')">
+                Standar Tarif
+            </x-nav-link>
         </div>
 
         {{-- KEUANGAN --}}
@@ -91,9 +94,6 @@
             <p class="px-4 mb-3 text-[10px] font-bold tracking-[0.2em] uppercase text-indigo-300/40">
                 Output
             </p>
-            <x-nav-link href="{{ route('standar-tarif.index') }}" icon="description" :active="request()->routeIs('standar-tarif.*')">
-                Standar Tarif
-            </x-nav-link>
             <x-nav-link href="#" icon="print" :active="request()->routeIs('cetak-laporan.*')">
                 Cetak Laporan
             </x-nav-link>

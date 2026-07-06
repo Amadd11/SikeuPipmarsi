@@ -178,7 +178,7 @@
                     Batal
                 </a>
                 <button type="submit"
-                    class="px-4 py-2 rounded-xl bg-primary hover:bg-primary-dark font-semibold text-white transition shadow-xs">
+                    class="inline-flex items-center gap-2 bg-gold text-gray-900 px-6 py-2.5 rounded-full text-sm font-semibold shadow hover:bg-gold-dark hover:shadow-md transition-all duration-200 active:scale-95">
                     Perbarui Transaksi
                 </button>
             </div>

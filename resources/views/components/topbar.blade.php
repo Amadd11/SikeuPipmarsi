@@ -24,7 +24,7 @@
         </span>
 
         <div
-            class="w-8 h-8 sm:w-9 sm:h-9 bg-primary rounded-full flex items-center justify-center text-white text-sm font-semibold cursor-pointer">
+            class="w-8 h-8 sm:w-9 sm:h-9 bg-gold rounded-full flex items-center justify-center text-gray-900 text-sm font-semibold cursor-pointer">
             {{ strtoupper(substr(auth()->user()->name ?? 'US', 0, 2)) }}
         </div>
     </div>

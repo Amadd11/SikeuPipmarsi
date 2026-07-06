@@ -48,7 +48,7 @@
 
             {{-- Tombol Tambah --}}
             <a href="{{ route('pengeluaran.create') }}"
-                class="inline-flex items-center justify-center gap-1.5 bg-primary text-white px-3.5 py-2 rounded-xl text-xs font-medium hover:bg-primary-dark transition">
+                class="inline-flex items-center gap-2 bg-gold text-gray-900 px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-gold-dark hover:shadow-md transition-all duration-200 active:scale-95">
                 <span class="material-symbols-outlined text-[16px]">add</span>
                 Tambah Pengeluaran
             </a>
@@ -61,7 +61,7 @@
         {{-- Tab: Semua --}}
         <a href="{{ route('pengeluaran.index', ['tahun' => $activeTahun]) }}"
             class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-{{ $activeBidang === null ? 'semibold' : 'medium' }}
-                {{ $activeBidang === null ? 'bg-primary text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-gray-900' }}
+                {{ $activeBidang === null ? 'bg-gold text-gray-900 shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-gray-900' }}
                 transition-colors">
             <span class="material-symbols-outlined text-[16px] {{ $activeBidang === null ? '' : 'text-gray-400' }}">
                 grid_view
@@ -73,7 +73,7 @@
         @foreach ($semuaBidang as $bidang)
             <a href="{{ route('pengeluaran.index', ['tahun' => $activeTahun, 'bidang' => $bidang->id]) }}"
                 class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-{{ $activeBidang === $bidang->id ? 'semibold' : 'medium' }}
-                    {{ $activeBidang === $bidang->id ? 'bg-primary text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-gray-900' }}
+                    {{ $activeBidang === $bidang->id ? 'bg-gold text-gray-900 shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-gray-900' }}
                     transition-colors">
                 <span
                     class="material-symbols-outlined text-[16px] {{ $activeBidang === $bidang->id ? '' : 'text-gray-400' }}">
@@ -252,7 +252,7 @@
                             <td class="px-4 py-2.5">
                                 <div class="flex items-center justify-center gap-1.5">
                                     <a href="{{ route('pengeluaran.edit', $item->id) }}"
-                                        class="w-7 h-7 rounded-md border border-gray-200 flex items-center justify-center text-gray-500 hover:border-primary hover:text-primary transition">
+                                        class="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-indigo-50 hover:border-indigo-300 hover:text-indigo-600 transition-all duration-200">
                                         <span class="material-symbols-outlined text-[16px]">edit</span>
                                     </a>
 
@@ -261,7 +261,7 @@
                                             action: '{{ route('pengeluaran.destroy', $item->id) }}',
                                             message: 'Yakin ingin menghapus {{ addslashes($item->nama_sumber) }}?'
                                         })"
-                                        class="w-7 h-7 rounded-md border border-red-200 flex items-center justify-center text-red-500 hover:bg-red-50 transition">
+                                        class="w-8 h-8 rounded-full bg-red-50/50 border border-red-200 flex items-center justify-center text-red-400 hover:bg-red-100 hover:border-red-400 hover:text-red-600 transition-all duration-200">
                                         <span class="material-symbols-outlined text-[16px]">delete</span>
                                     </button>
                                 </div>

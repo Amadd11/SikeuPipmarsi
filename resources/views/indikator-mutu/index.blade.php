@@ -18,7 +18,7 @@
         </div>
 
         <a href="{{ route('indikator-mutu.create') }}"
-            class="inline-flex items-center justify-center gap-1.5 bg-primary text-white px-3.5 py-2 rounded-xl text-xs font-medium hover:bg-primary-dark transition">
+            class="inline-flex items-center gap-2 bg-gold text-gray-900 px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-gold-dark hover:shadow-md transition-all duration-200 active:scale-95">
             <span class="material-symbols-outlined text-[16px]">add</span>
             Tambah Indikator
         </a>
@@ -30,7 +30,7 @@
         {{-- Tab: Semua --}}
         <a href="{{ route('indikator-mutu.index') }}"
             class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-{{ $activeBidang === null ? 'semibold' : 'medium' }}
-                {{ $activeBidang === null ? 'bg-primary text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-gray-900' }}
+                {{ $activeBidang === null ? 'bg-gold text-gray-900 shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-gray-900' }}
                 transition-colors">
             <span class="material-symbols-outlined text-[16px] {{ $activeBidang === null ? '' : 'text-gray-400' }}">
                 grid_view
@@ -42,7 +42,7 @@
         @foreach ($bidangKerjaList as $bidang)
             <a href="{{ route('indikator-mutu.index', ['bidang' => $bidang->id]) }}"
                 class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-{{ $activeBidang === $bidang->id ? 'semibold' : 'medium' }}
-                    {{ $activeBidang === $bidang->id ? 'bg-primary text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-gray-900' }}
+                    {{ $activeBidang === $bidang->id ? 'bg-gold text-gray-900 shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-gray-900' }}
                     transition-colors">
                 <span class="material-symbols-outlined text-[16px] {{ $activeBidang === $bidang->id ? '' : 'text-gray-400' }}">
                     {{ $bidang->icon ?? 'domain' }}
@@ -166,7 +166,7 @@
                             <td class="px-4 py-3 align-top">
                                 <div class="flex items-center justify-center gap-1.5">
                                     <a href="{{ route('indikator-mutu.edit', $item->id) }}"
-                                        class="w-7 h-7 rounded-md border border-gray-200 flex items-center justify-center text-gray-500 hover:border-primary hover:text-primary transition">
+                                        class="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-indigo-50 hover:border-indigo-300 hover:text-indigo-600 transition-all duration-200">
                                         <span class="material-symbols-outlined text-[16px]">edit</span>
                                     </a>
 
@@ -175,7 +175,7 @@
                                             action: '{{ route('indikator-mutu.destroy', $item->id) }}',
                                             message: 'Yakin ingin menghapus indikator {{ addslashes($item->kode) }} — {{ addslashes(Str::limit($item->nama, 40)) }}?'
                                         })"
-                                        class="w-7 h-7 rounded-md border border-red-200 flex items-center justify-center text-red-500 hover:bg-red-50 transition">
+                                        class="w-8 h-8 rounded-full bg-red-50/50 border border-red-200 flex items-center justify-center text-red-400 hover:bg-red-100 hover:border-red-400 hover:text-red-600 transition-all duration-200">
                                         <span class="material-symbols-outlined text-[16px]">delete</span>
                                     </button>
                                 </div>
@@ -191,7 +191,7 @@
                                     <h3 class="font-medium text-gray-700 text-sm">Belum ada indikator mutu</h3>
                                     <p class="text-xs text-gray-500">Tambahkan indikator mutu pertama untuk bidang ini.</p>
                                     <a href="{{ route('indikator-mutu.create') }}"
-                                        class="mt-2 inline-flex items-center gap-1.5 bg-primary text-white px-3.5 py-2 rounded-xl text-xs font-medium hover:bg-primary-dark transition">
+                                        class="mt-3 inline-flex items-center gap-2 bg-gold text-gray-900 px-5 py-2 rounded-full text-xs font-semibold shadow hover:bg-gold-dark hover:shadow-md transition-all duration-200 active:scale-95">
                                         <span class="material-symbols-outlined text-[16px]">add</span>
                                         Tambah Sekarang
                                     </a>
