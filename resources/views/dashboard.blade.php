@@ -63,11 +63,9 @@
                 <h3 class="font-semibold text-gray-800 text-sm">Saldo & Serapan</h3>
             </div>
 
-            <div class="space-y-4">
-                {{-- Saldo --}}
-                <div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Saldo Kas</p>
-                    <p class="text-xl font-bold {{ $saldoKas >= 0 ? 'text-teal-700' : 'text-red-600' }}">
+                <div class="mb-6">
+                    <p class="text-[10px] text-indigo-200/70 uppercase tracking-widest font-semibold mb-1">Saldo Kas Tersedia</p>
+                    <p class="text-3xl font-black {{ $saldoKas >= 0 ? 'text-white' : 'text-rose-400' }} tracking-tight">
                         Rp {{ number_format(abs($saldoKas), 0, ',', '.') }}
                         @if ($saldoKas < 0) <span class="text-xs font-medium">(defisit)</span> @endif
                     </p>
