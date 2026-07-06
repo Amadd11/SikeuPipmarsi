@@ -5,7 +5,7 @@
 
 {{-- Sidebar Full Height dengan Hanya Sudut Kanan yang Melengkung (lg:rounded-r-3xl) --}}
 <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-    class="fixed inset-y-0 left-0 z-50 w-72 bg-linear-to-b from-indigo-950 via-[#161436] to-[#0b091a] text-white flex flex-col h-full overflow-hidden shadow-2xl transition-all duration-300 ease-in-out 
+    class="fixed inset-y-0 left-0 z-50 w-72 bg-sidebar text-white flex flex-col h-full overflow-hidden shadow-2xl transition-all duration-300 ease-in-out 
            lg:static lg:translate-x-0 lg:flex lg:rounded-r-3xl lg:border-r lg:border-white/5 border-r border-white/5">
 
     {{-- Logo & Header (Dibuat lebih compact) --}}
@@ -19,9 +19,9 @@
 
         <div class="flex items-center gap-2.5">
             {{-- Ikon Logo (Diperkecil dari w-10 ke w-8) --}}
-            <div
-                class="w-8 h-8 bg-linear-to-br from-gold to-yellow-300 rounded-xl flex items-center justify-center shadow-[0_0_12px_rgba(234,179,8,0.2)] shrink-0">
-                <span class="material-symbols-outlined text-[#0b091a] text-[20px] font-bold">account_balance</span>
+            <div class="w-14 h-14 shrink-0">
+                <img src="{{ asset('images/logo-pipmarsi.png') }}" alt="Logo PIPMARSI"
+                    class="w-full h-full object-contain">
             </div>
 
             <div class="leading-none">
@@ -78,7 +78,7 @@
             <x-nav-link href="{{ route('indikator-mutu.index') }}" icon="verified" :active="request()->routeIs('indikator-mutu.*')">
                 Indikator Mutu
             </x-nav-link>
-            <x-nav-link href="#" icon="bar_chart" :active="request()->routeIs('rekapitulasi.*')">
+            <x-nav-link href="{{ route('rekapitulasi.index') }}" icon="bar_chart" :active="request()->routeIs('rekapitulasi.*')">
                 Rekapitulasi
             </x-nav-link>
             <x-nav-link href="{{ route('audit-monitoring.index') }}" icon="manage_search" :active="request()->routeIs('audit-monitoring.*')">
@@ -98,6 +98,18 @@
                 Cetak Laporan
             </x-nav-link>
         </div>
+
+        {{-- ADMINISTRASI (Super Admin Only) --}}
+        @role('super_admin')
+        <div>
+            <p class="px-4 mb-3 text-[10px] font-bold tracking-[0.2em] uppercase text-indigo-300/40">
+                Administrasi
+            </p>
+            <x-nav-link href="{{ route('users.index') }}" icon="manage_accounts" :active="request()->routeIs('users.*')">
+                Manajemen User
+            </x-nav-link>
+        </div>
+        @endrole
     </nav>
 
     {{-- LOGOUT --}}

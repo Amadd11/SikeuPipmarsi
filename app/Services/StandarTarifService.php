@@ -55,6 +55,11 @@ class StandarTarifService
     public function destroy(StandarTarif $standarTarif): void
     {
         DB::transaction(function () use ($standarTarif) {
+
+            if ($standarTarif->file) {
+                Storage::disk('public')->delete($standarTarif->file);
+            }
+
             $this->repository->delete($standarTarif);
         });
     }

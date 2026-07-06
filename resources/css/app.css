@@ -1,10 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-    --color-primary: #6d28d9;
-    --color-primary-dark: #5b21b6;
-    --color-sidebar: #2e1065;
-    --color-gold: #facc15;
+    /* Ungu dari sisi luar lingkaran logo */
+    --color-primary: #9333ea; /* Tailwind Purple 600 */
+    --color-primary-dark: #7e22ce; /* Tailwind Purple 700 */
+
+    --color-sidebar: #3b0764; /* Tailwind Purple 900 */
+
+    --color-gold: #facc15; /* Tailwind Yellow 400 */
+
+    /* Aksen opsional: Merah PIP-MARSI untuk badge/tombol penting */
+    --color-accent-red: #ef4444;
 }
 
 .scrollbar-hide {

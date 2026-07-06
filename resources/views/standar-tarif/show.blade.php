@@ -28,7 +28,7 @@
                 <button
                     @click="$dispatch('open-delete-modal', {
                         action: '{{ route('standar-tarif.destroy', $standarTarif->id) }}',
-                        message: 'Yakin ingin menghapus standar tarif \"{{ addslashes($standarTarif->nama) }}\"? File PDF juga akan ikut terhapus.'
+                        message: 'Yakin ingin menghapus standar tarif {{ addslashes($standarTarif->nama) }}? File PDF juga akan ikut terhapus.'
                     })"
                     class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-red-200 text-red-500 text-xs font-medium hover:bg-red-50 transition">
                     <span class="material-symbols-outlined text-[16px]">delete</span>
