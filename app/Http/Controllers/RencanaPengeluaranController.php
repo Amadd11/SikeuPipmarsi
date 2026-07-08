@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\RencanaPengeluaran;
 use App\Models\TahunAnggaran;
 use App\Services\RencanaPengeluaranService;
+use App\Http\Requests\RencanaPengeluaranStoreRequest;
+use App\Http\Requests\RencanaPengeluaranUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -50,20 +52,18 @@ class RencanaPengeluaranController extends Controller
     {
         $options = $this->service->getFormOptions();
 
-        return view('pengeluaran.create', $options);
+        $initialDetails = old('details') 
+            ? $this->formatDetails(old('details')) 
+            : [['id' => 1, 'uraian' => '', 'satuan' => '', 'hargaRaw' => '', 'hargaDisplay' => '', 'kuantitas' => 1]];
+
+        return view('pengeluaran.create', array_merge($options, [
+            'initialDetails' => $initialDetails,
+        ]));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(RencanaPengeluaranStoreRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'tahun_anggaran_id'       => ['required', 'exists:tahun_anggaran,id'],
-            'bidang_kerja_id'         => ['required', 'exists:bidang_kerja,id'],
-            'kategori_pengeluaran_id' => ['required', 'exists:kategori_pengeluaran,id'],
-            'indikator_mutu_id'       => ['nullable', 'exists:indikator_mutu,id'],
-            'nama_kegiatan'           => ['required', 'string', 'max:200'],
-            'jumlah_anggaran'         => ['required', 'numeric', 'min:0'],
-            'keterangan'              => ['nullable', 'string'],
-        ]);
+        $validated = $request->validated();
 
         try {
             $this->service->store($validated);
@@ -85,23 +85,23 @@ class RencanaPengeluaranController extends Controller
     {
         $options = $this->service->getFormOptions();
 
-        return view('pengeluaran.edit', [
-            'pengeluaran' => $pengeluaran,
-            ...$options,
-        ]);
+        $initialDetails = old('details') 
+            ? $this->formatDetails(old('details')) 
+            : $this->formatDetailsFromModel($pengeluaran->details);
+
+        if (empty($initialDetails)) {
+            $initialDetails = [['id' => 1, 'uraian' => '', 'satuan' => '', 'hargaRaw' => '', 'hargaDisplay' => '', 'kuantitas' => 1]];
+        }
+
+        return view('pengeluaran.edit', array_merge($options, [
+            'pengeluaran'    => $pengeluaran,
+            'initialDetails' => $initialDetails,
+        ]));
     }
 
-    public function update(Request $request, RencanaPengeluaran $pengeluaran): RedirectResponse
+    public function update(RencanaPengeluaranUpdateRequest $request, RencanaPengeluaran $pengeluaran): RedirectResponse
     {
-        $validated = $request->validate([
-            'tahun_anggaran_id'       => ['required', 'exists:tahun_anggaran,id'],
-            'bidang_kerja_id'         => ['required', 'exists:bidang_kerja,id'],
-            'kategori_pengeluaran_id' => ['required', 'exists:kategori_pengeluaran,id'],
-            'indikator_mutu_id'       => ['nullable', 'exists:indikator_mutu,id'],
-            'nama_kegiatan'           => ['required', 'string', 'max:200'],
-            'jumlah_anggaran'         => ['required', 'numeric', 'min:0'],
-            'keterangan'              => ['nullable', 'string'],
-        ]);
+        $validated = $request->validated();
 
         try {
             $this->service->update($pengeluaran, $validated);
@@ -136,5 +136,39 @@ class RencanaPengeluaranController extends Controller
                 'bidang' => $bidangId,
             ])
             ->with('success', 'Rencana pengeluaran berhasil dihapus.');
+    }
+
+    private function formatDetails(?array $oldDetails): array
+    {
+        if (empty($oldDetails)) return [];
+        
+        $initialDetails = [];
+        foreach ($oldDetails as $idx => $d) {
+            $initialDetails[] = [
+                'id' => $idx,
+                'uraian' => $d['uraian'] ?? '',
+                'satuan' => $d['satuan'] ?? '',
+                'hargaRaw' => $d['harga'] ?? '',
+                'hargaDisplay' => isset($d['harga']) ? number_format((float) $d['harga'], 0, ',', '.') : '',
+                'kuantitas' => $d['kuantitas'] ?? 1
+            ];
+        }
+        return $initialDetails;
+    }
+
+    private function formatDetailsFromModel($details): array
+    {
+        $initialDetails = [];
+        foreach ($details as $d) {
+            $initialDetails[] = [
+                'id' => $d->id,
+                'uraian' => $d->uraian,
+                'satuan' => $d->satuan,
+                'hargaRaw' => $d->harga,
+                'hargaDisplay' => number_format((float) $d->harga, 0, ',', '.'),
+                'kuantitas' => $d->kuantitas
+            ];
+        }
+        return $initialDetails;
     }
 }

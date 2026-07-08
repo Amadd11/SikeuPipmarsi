@@ -29,8 +29,12 @@ class RencanaPengeluaranStoreRequest extends FormRequest
             'kategori_pengeluaran_id' => 'required|exists:kategori_pengeluaran,id',
             'indikator_mutu_id' => 'required|exists:indikator_mutu,id',
             'nama_kegiatan' => 'required|string|max:255',
+            'details' => 'required|array|min:1',
+            'details.*.uraian' => 'required|string|max:255',
+            'details.*.satuan' => 'required|string|max:50',
+            'details.*.harga' => 'required|numeric|min:0',
+            'details.*.kuantitas' => 'required|integer|min:1',
             'jumlah_anggaran' => 'required|numeric|min:0',
-            'keterangan' => 'nullable|string',
         ];
     }
 
@@ -42,8 +46,12 @@ class RencanaPengeluaranStoreRequest extends FormRequest
             'kategori_pengeluaran_id' => 'Kategori Pengeluaran',
             'indikator_mutu_id' => 'Indikator Mutu',
             'nama_kegiatan' => 'Nama Kegiatan',
+            'details' => 'Rincian Pengeluaran',
+            'details.*.uraian' => 'Uraian',
+            'details.*.satuan' => 'Satuan',
+            'details.*.harga' => 'Harga',
+            'details.*.kuantitas' => 'Kuantitas',
             'jumlah_anggaran' => 'Jumlah Anggaran',
-            'keterangan' => 'Keterangan',
         ];
     }
 

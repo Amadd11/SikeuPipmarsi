@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('nama_kegiatan', 250);
             $table->decimal('jumlah_anggaran', 15, 2)->default(0);
             $table->decimal('jumlah_realisasi', 15, 2)->default(0);
-            $table->text('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

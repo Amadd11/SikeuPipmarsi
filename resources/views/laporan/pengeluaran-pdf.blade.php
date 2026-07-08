@@ -31,7 +31,9 @@
             <th>Bidang Kerja</th>
             <th>Kategori</th>
             <th>Nama Kegiatan</th>
-            <th>Keterangan</th>
+            <th>Satuan</th>
+            <th class="text-right">Harga</th>
+            <th class="text-center">Qty</th>
             <th class="text-right">Anggaran</th>
             <th class="text-right">Realisasi</th>
             <th class="text-right">Sisa</th>
@@ -40,24 +42,37 @@
     </thead>
     <tbody>
         @forelse ($data as $i => $item)
-            @php
-                $sisa = $item->jumlah_anggaran - $item->jumlah_realisasi;
-                $pct = $item->jumlah_anggaran > 0 ? round(($item->jumlah_realisasi / $item->jumlah_anggaran) * 100, 1) : 0;
-            @endphp
             <tr>
                 <td class="text-center">{{ $i + 1 }}</td>
                 <td>{{ $item->bidangKerja->nama ?? '-' }}</td>
                 <td>{{ $item->kategoriPengeluaran->nama ?? '-' }}</td>
                 <td>{{ $item->nama_kegiatan }}</td>
-                <td>{{ Str::limit($item->keterangan, 40) ?? '-' }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td class="text-right">Rp {{ number_format($item->jumlah_anggaran, 0, ',', '.') }}</td>
                 <td class="text-right">Rp {{ number_format($item->jumlah_realisasi, 0, ',', '.') }}</td>
-                <td class="text-right">Rp {{ number_format($sisa, 0, ',', '.') }}</td>
-                <td class="text-center">{{ $pct }}%</td>
+                <td class="text-right">Rp {{ number_format($item->sisa_anggaran, 0, ',', '.') }}</td>
+                <td class="text-center">{{ $item->persentase_realisasi }}%</td>
             </tr>
+            @foreach($item->details as $d)
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="padding-left: 20px; color: #555;">- {{ $d->uraian }}</td>
+                <td>{{ $d->satuan }}</td>
+                <td class="text-right">Rp {{ number_format($d->harga, 0, ',', '.') }}</td>
+                <td class="text-center">{{ $d->kuantitas }}</td>
+                <td class="text-right">Rp {{ number_format($d->total, 0, ',', '.') }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            @endforeach
         @empty
             <tr>
-                <td colspan="9" class="text-center" style="padding: 20px; color: #999;">Tidak ada data pengeluaran.</td>
+                <td colspan="11" class="text-center" style="padding: 20px; color: #999;">Tidak ada data pengeluaran.</td>
             </tr>
         @endforelse
     </tbody>
@@ -65,7 +80,7 @@
     @if ($data->count() > 0)
     <tfoot>
         <tr class="summary-row">
-            <td colspan="5" class="text-right font-bold">TOTAL</td>
+            <td colspan="7" class="text-right font-bold">TOTAL</td>
             <td class="text-right">Rp {{ number_format($summary['totalAnggaran'], 0, ',', '.') }}</td>
             <td class="text-right">Rp {{ number_format($summary['totalRealisasi'], 0, ',', '.') }}</td>
             <td class="text-right">Rp {{ number_format($summary['sisaAnggaran'], 0, ',', '.') }}</td>

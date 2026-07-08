@@ -144,7 +144,7 @@
                         <th class="px-4 py-2.5 text-left">Kegiatan / Pos</th>
                         <th class="px-4 py-2.5 text-left">Kategori</th>
                         <th class="px-4 py-2.5 text-left">Indikator Mutu</th>
-                        <th class="px-4 py-2.5 text-right">Anggaran</th>
+                        <th class="px-4 py-2.5 text-right">Total Anggaran</th>
                         <th class="px-4 py-2.5 text-right">Realisasi</th>
                         <th class="px-4 py-2.5 text-right">Sisa</th>
                         <th class="px-4 py-2.5 text-center w-32">Progress</th>
@@ -156,15 +156,6 @@
                 <tbody class="divide-y divide-gray-100 text-gray-700">
 
                     @forelse ($pengeluaran as $item)
-                        @php
-                            $sisa = $item->jumlah_anggaran - $item->jumlah_realisasi;
-                            $persen =
-                                $item->jumlah_anggaran > 0
-                                    ? round(($item->jumlah_realisasi / $item->jumlah_anggaran) * 100)
-                                    : 0;
-                            $tercapai = $persen >= 100;
-                            $berjalan = $persen > 0 && $persen < 100;
-                        @endphp
 
                         <tr class="hover:bg-gray-50/70 transition">
 
@@ -179,11 +170,6 @@
                                     <span class="font-semibold text-gray-900 leading-tight">
                                         {{ $item->nama_kegiatan }}
                                     </span>
-                                    @if ($item->keterangan)
-                                        <span class="text-[10px] text-gray-500 mt-0.5">
-                                            {{ Str::limit($item->keterangan, 60) }}
-                                        </span>
-                                    @endif
                                 </div>
                             </td>
 
@@ -222,28 +208,28 @@
 
                             {{-- Sisa --}}
                             <td class="px-4 py-2.5 text-right font-medium text-gray-800 align-top whitespace-nowrap">
-                                Rp {{ number_format($sisa, 0, ',', '.') }}
+                                Rp {{ number_format($item->sisa_anggaran, 0, ',', '.') }}
                             </td>
 
                             {{-- Progress --}}
                             <td class="px-4 py-2.5 align-top w-28">
                                 <div class="flex items-center gap-2 mt-0.5">
                                     <div class="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                        <div class="h-full bg-primary" style="width: {{ min($persen, 100) }}%"></div>
+                                        <div class="h-full bg-primary" style="width: {{ min($item->persentase_realisasi, 100) }}%"></div>
                                     </div>
                                     <span
-                                        class="text-[10px] text-gray-500 font-medium w-6 text-right">{{ $persen }}%</span>
+                                        class="text-[10px] text-gray-500 font-medium w-6 text-right">{{ round($item->persentase_realisasi) }}%</span>
                                 </div>
                             </td>
 
                             {{-- Status --}}
                             <td class="px-4 py-2.5 text-center align-top">
-                                @if ($tercapai)
+                                @if ($item->status_realisasi === 'selesai')
                                     <span
                                         class="inline-flex px-2 py-0.5 mt-0.5 rounded-md bg-green-100 text-green-700 text-[10px] font-semibold tracking-wide">
                                         Selesai
                                     </span>
-                                @elseif ($berjalan)
+                                @elseif ($item->status_realisasi === 'berjalan')
                                     <span
                                         class="inline-flex px-2 py-0.5 mt-0.5 rounded-md bg-amber-100 text-amber-700 text-[10px] font-semibold tracking-wide">
                                         Berjalan

@@ -63,7 +63,7 @@ class RencanaPengeluaranService
     public function store(array $validated): RencanaPengeluaran
     {
         return DB::transaction(function () use ($validated): RencanaPengeluaran {
-            return $this->pengeluaranRepo->create([
+            $pengeluaran = $this->pengeluaranRepo->create([
                 'tahun_anggaran_id'       => $validated['tahun_anggaran_id'],
                 'bidang_kerja_id'         => $validated['bidang_kerja_id'],
                 'kategori_pengeluaran_id' => $validated['kategori_pengeluaran_id'],
@@ -71,23 +71,44 @@ class RencanaPengeluaranService
                 'nama_kegiatan'           => $validated['nama_kegiatan'],
                 'jumlah_anggaran'         => $validated['jumlah_anggaran'],
                 'jumlah_realisasi'        => 0,
-                'keterangan'              => $validated['keterangan'] ?? null,
             ]);
+
+            foreach ($validated['details'] as $detail) {
+                $pengeluaran->details()->create([
+                    'uraian'    => $detail['uraian'],
+                    'satuan'    => $detail['satuan'],
+                    'harga'     => $detail['harga'],
+                    'kuantitas' => $detail['kuantitas'],
+                ]);
+            }
+
+            return $pengeluaran;
         });
     }
 
     public function update(RencanaPengeluaran $pengeluaran, array $validated): RencanaPengeluaran
     {
         return DB::transaction(function () use ($pengeluaran, $validated): RencanaPengeluaran {
-            return $this->pengeluaranRepo->update($pengeluaran, [
+            $pengeluaran = $this->pengeluaranRepo->update($pengeluaran, [
                 'tahun_anggaran_id'       => $validated['tahun_anggaran_id'],
                 'bidang_kerja_id'         => $validated['bidang_kerja_id'],
                 'kategori_pengeluaran_id' => $validated['kategori_pengeluaran_id'],
                 'indikator_mutu_id'       => $validated['indikator_mutu_id'] ?? null,
                 'nama_kegiatan'           => $validated['nama_kegiatan'],
                 'jumlah_anggaran'         => $validated['jumlah_anggaran'],
-                'keterangan'              => $validated['keterangan'] ?? null,
             ]);
+
+            $pengeluaran->details()->delete();
+            foreach ($validated['details'] as $detail) {
+                $pengeluaran->details()->create([
+                    'uraian'    => $detail['uraian'],
+                    'satuan'    => $detail['satuan'],
+                    'harga'     => $detail['harga'],
+                    'kuantitas' => $detail['kuantitas'],
+                ]);
+            }
+
+            return $pengeluaran;
         });
     }
 

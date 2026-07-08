@@ -21,6 +21,7 @@ class PengeluaranExport implements FromCollection, WithHeadings, WithStyles, Sho
     protected string $periode;
     protected string $filterBidang;
     protected int $headerRows = 0;
+    protected int $totalRows = 0;
 
     public function __construct(Collection $data, array $summary, string $periode, string $filterBidang = '')
     {
@@ -32,29 +33,48 @@ class PengeluaranExport implements FromCollection, WithHeadings, WithStyles, Sho
 
     public function collection(): Collection
     {
-        return $this->data->map(function ($item, $index) {
-            $sisa = $item->jumlah_anggaran - $item->jumlah_realisasi;
-            $pct = $item->jumlah_anggaran > 0
-                ? round(($item->jumlah_realisasi / $item->jumlah_anggaran) * 100, 1) . '%'
-                : '0%';
-
-            return [
-                $index + 1,
+        $rows = collect([]);
+        $index = 1;
+        foreach ($this->data as $item) {
+            $rows->push([
+                $index,
                 $item->bidangKerja->nama ?? '-',
                 $item->kategoriPengeluaran->nama ?? '-',
                 $item->nama_kegiatan,
-                $item->keterangan ?? '-',
+                '', // Satuan
+                '', // Harga
+                '', // Qty
                 $item->jumlah_anggaran,
                 $item->jumlah_realisasi,
-                $sisa,
-                $pct,
-            ];
-        });
+                $item->sisa_anggaran,
+                $item->persentase_realisasi . '%',
+            ]);
+            $this->totalRows++;
+
+            foreach ($item->details as $d) {
+                $rows->push([
+                    '',
+                    '',
+                    '',
+                    '    - ' . $d->uraian,
+                    $d->satuan,
+                    $d->harga,
+                    $d->kuantitas,
+                    $d->total,
+                    '',
+                    '',
+                    '',
+                ]);
+                $this->totalRows++;
+            }
+            $index++;
+        }
+        return $rows;
     }
 
     public function headings(): array
     {
-        return ['No', 'Bidang Kerja', 'Kategori', 'Nama Kegiatan', 'Keterangan', 'Anggaran', 'Realisasi', 'Sisa', 'Serapan'];
+        return ['No', 'Bidang Kerja', 'Kategori', 'Nama Kegiatan', 'Satuan', 'Harga', 'Qty', 'Anggaran', 'Realisasi', 'Sisa', 'Serapan'];
     }
 
     public function styles(Worksheet $sheet): array
@@ -74,19 +94,18 @@ class PengeluaranExport implements FromCollection, WithHeadings, WithStyles, Sho
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $sheet = $event->sheet->getDelegate();
-                $lastCol = 'I';
+                $lastCol = 'L';
 
                 // Summary row
-                $dataCount = $this->data->count();
-                $summaryRow = $this->headerRows + 1 + 1 + $dataCount;
-                $sheet->setCellValue("E{$summaryRow}", 'TOTAL');
-                $sheet->setCellValue("F{$summaryRow}", $this->summary['totalAnggaran']);
-                $sheet->setCellValue("G{$summaryRow}", $this->summary['totalRealisasi']);
-                $sheet->setCellValue("H{$summaryRow}", $this->summary['sisaAnggaran']);
+                $summaryRow = $this->headerRows + 1 + 1 + $this->totalRows;
+                $sheet->setCellValue("H{$summaryRow}", 'TOTAL');
+                $sheet->setCellValue("I{$summaryRow}", $this->summary['totalAnggaran']);
+                $sheet->setCellValue("J{$summaryRow}", $this->summary['totalRealisasi']);
+                $sheet->setCellValue("K{$summaryRow}", $this->summary['sisaAnggaran']);
                 $totalPct = $this->summary['totalAnggaran'] > 0
                     ? round(($this->summary['totalRealisasi'] / $this->summary['totalAnggaran']) * 100, 1) . '%'
                     : '0%';
-                $sheet->setCellValue("I{$summaryRow}", $totalPct);
+                $sheet->setCellValue("L{$summaryRow}", $totalPct);
 
                 $sheet->getStyle("A{$summaryRow}:{$lastCol}{$summaryRow}")->applyFromArray([
                     'font' => ['bold' => true],
@@ -96,7 +115,8 @@ class PengeluaranExport implements FromCollection, WithHeadings, WithStyles, Sho
 
                 // Format currency
                 $dataStartRow = $this->headerRows + 2;
-                $sheet->getStyle("F{$dataStartRow}:H{$summaryRow}")->getNumberFormat()->setFormatCode('#,##0');
+                $sheet->getStyle("F{$dataStartRow}:F{$summaryRow}")->getNumberFormat()->setFormatCode('#,##0');
+                $sheet->getStyle("I{$dataStartRow}:K{$summaryRow}")->getNumberFormat()->setFormatCode('#,##0');
 
                 // Borders
                 $headingRow = $this->headerRows + 1;
