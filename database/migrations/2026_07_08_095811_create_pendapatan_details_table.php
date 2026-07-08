@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pendapatan_details', function (Blueprint $table) {
+        Schema::create('pendapatan_detail', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pendapatan_id')->constrained('pendapatan')->cascadeOnDelete();
+            $table->text('uraian');
+            $table->string('satuan', 50);
+            $table->decimal('jumlah', 15, 2)->default(0);
+            $table->integer('kuantitas')->default(1);
+            $table->decimal('total', 15, 2)->default(0);
             $table->timestamps();
         });
     }
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pendapatan_details');
+        Schema::dropIfExists('pendapatan_detail');
     }
 };

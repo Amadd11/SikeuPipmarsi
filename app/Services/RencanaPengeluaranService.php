@@ -63,13 +63,20 @@ class RencanaPengeluaranService
     public function store(array $validated): RencanaPengeluaran
     {
         return DB::transaction(function () use ($validated): RencanaPengeluaran {
+            $totalAnggaran = 0;
+            if (!empty($validated['details'])) {
+                foreach ($validated['details'] as $detail) {
+                    $totalAnggaran += (float)$detail['harga'] * (int)$detail['kuantitas'];
+                }
+            }
+
             $pengeluaran = $this->pengeluaranRepo->create([
                 'tahun_anggaran_id'       => $validated['tahun_anggaran_id'],
                 'bidang_kerja_id'         => $validated['bidang_kerja_id'],
                 'kategori_pengeluaran_id' => $validated['kategori_pengeluaran_id'],
                 'indikator_mutu_id'       => $validated['indikator_mutu_id'] ?? null,
                 'nama_kegiatan'           => $validated['nama_kegiatan'],
-                'jumlah_anggaran'         => $validated['jumlah_anggaran'],
+                'jumlah_anggaran'         => $totalAnggaran,
                 'jumlah_realisasi'        => 0,
             ]);
 
@@ -89,13 +96,20 @@ class RencanaPengeluaranService
     public function update(RencanaPengeluaran $pengeluaran, array $validated): RencanaPengeluaran
     {
         return DB::transaction(function () use ($pengeluaran, $validated): RencanaPengeluaran {
+            $totalAnggaran = 0;
+            if (!empty($validated['details'])) {
+                foreach ($validated['details'] as $detail) {
+                    $totalAnggaran += (float)$detail['harga'] * (int)$detail['kuantitas'];
+                }
+            }
+
             $pengeluaran = $this->pengeluaranRepo->update($pengeluaran, [
                 'tahun_anggaran_id'       => $validated['tahun_anggaran_id'],
                 'bidang_kerja_id'         => $validated['bidang_kerja_id'],
                 'kategori_pengeluaran_id' => $validated['kategori_pengeluaran_id'],
                 'indikator_mutu_id'       => $validated['indikator_mutu_id'] ?? null,
                 'nama_kegiatan'           => $validated['nama_kegiatan'],
-                'jumlah_anggaran'         => $validated['jumlah_anggaran'],
+                'jumlah_anggaran'         => $totalAnggaran,
             ]);
 
             $pengeluaran->details()->delete();

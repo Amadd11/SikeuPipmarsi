@@ -15,24 +15,25 @@ class RencanaPendapatanService
         protected RencanaPendapatanRepository $repository
     ) {}
 
-    public function getListByTahunAktif(
+    public function getList(
+        ?int $tahunId = null,
         int $perPage = 10
     ): LengthAwarePaginator {
 
-        $tahunAktif = $this->getTahunAktifOrFail();
+        $tahunId = $tahunId ?? $this->getTahunAktifOrFail()->id;
 
         return $this->repository->getList(
-            $tahunAktif->id,
+            $tahunId,
             $perPage
         );
     }
 
-    public function getSummaryByTahunAktif(): array
+    public function getSummary(?int $tahunId = null): array
     {
-        $tahunAktif = $this->getTahunAktifOrFail();
+        $tahunId = $tahunId ?? $this->getTahunAktifOrFail()->id;
 
         $summary = $this->repository->getSummary(
-            $tahunAktif->id
+            $tahunId
         );
 
         $totalRencana   = (float) ($summary->total_rencana ?? 0);
@@ -64,14 +65,34 @@ class RencanaPendapatanService
 
         return DB::transaction(function () use ($validated) {
 
-            return $this->repository->create([
+            $totalRencana = 0;
+            if (!empty($validated['details'])) {
+                foreach ($validated['details'] as $detail) {
+                    $totalRencana += (float)$detail['jumlah'] * (int)$detail['kuantitas'];
+                }
+            }
+
+            $pendapatan = $this->repository->create([
                 'tahun_anggaran_id'      => $validated['tahun_anggaran_id'],
                 'kategori_pendapatan_id' => $validated['kategori_pendapatan_id'],
                 'nama_sumber'            => $validated['nama_sumber'],
                 'keterangan'             => $validated['keterangan'] ?? null,
-                'jumlah_rencana'         => $validated['jumlah_rencana'],
+                'jumlah_rencana'         => $totalRencana,
                 'jumlah_realisasi'       => 0,
             ]);
+
+            if (!empty($validated['details'])) {
+                foreach ($validated['details'] as $detail) {
+                    $pendapatan->details()->create([
+                        'uraian'    => $detail['uraian'],
+                        'satuan'    => $detail['satuan'],
+                        'jumlah'    => $detail['jumlah'],
+                        'kuantitas' => $detail['kuantitas'],
+                    ]);
+                }
+            }
+
+            return $pendapatan;
         });
     }
 
@@ -82,15 +103,37 @@ class RencanaPendapatanService
 
         return DB::transaction(function () use ($pendapatan, $validated) {
 
-            return $this->repository->update(
+            $totalRencana = 0;
+            if (!empty($validated['details'])) {
+                foreach ($validated['details'] as $detail) {
+                    $totalRencana += (float)$detail['jumlah'] * (int)$detail['kuantitas'];
+                }
+            }
+
+            $pendapatan = $this->repository->update(
                 $pendapatan,
                 [
                     'kategori_pendapatan_id' => $validated['kategori_pendapatan_id'],
                     'nama_sumber'            => $validated['nama_sumber'],
                     'keterangan'             => $validated['keterangan'] ?? null,
-                    'jumlah_rencana'         => $validated['jumlah_rencana'],
+                    'jumlah_rencana'         => $totalRencana,
                 ]
             );
+
+            // Re-create details
+            $pendapatan->details()->delete();
+            if (!empty($validated['details'])) {
+                foreach ($validated['details'] as $detail) {
+                    $pendapatan->details()->create([
+                        'uraian'    => $detail['uraian'],
+                        'satuan'    => $detail['satuan'],
+                        'jumlah'    => $detail['jumlah'],
+                        'kuantitas' => $detail['kuantitas'],
+                    ]);
+                }
+            }
+
+            return $pendapatan;
         });
     }
 

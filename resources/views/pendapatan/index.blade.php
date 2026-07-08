@@ -1,6 +1,15 @@
 <x-app-layout>
     <x-slot:title>Rencana Pendapatan</x-slot>
 
+       {{-- Flash Message --}}
+    @if (session('success'))
+        <div
+            class="mb-4 px-4 py-3 rounded-xl bg-green-50 border border-green-100 text-green-700 text-xs flex items-center gap-2">
+            <span class="material-symbols-outlined text-[16px]">check_circle</span>
+            {{ session('success') }}
+        </div>
+    @endif
+
     {{-- Header --}}
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-5">
         <div>
@@ -8,10 +17,37 @@
                 Pengelolaan seluruh sumber pendapatan organisasi PIPMARSI
             </p>
         </div>
-        <div class="flex items-center gap-2 flex-wrap">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+            {{-- Filter Tahun Anggaran --}}
+            <div class="flex items-center gap-2" x-data="{
+                onChange(e) {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('tahun', e.target.value);
+                    url.searchParams.delete('page');
+                    window.location.href = url.toString();
+                }
+            }">
+                <label class="text-xs text-gray-500 font-medium whitespace-nowrap">Tahun:</label>
+                <div class="relative">
+                    <select @change="onChange($event)"
+                        class="pl-3 pr-8 py-1.5 text-xs font-semibold rounded-lg border border-gray-200 bg-white text-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none appearance-none cursor-pointer">
+                        @foreach ($tahunAnggaranList as $tahun)
+                            <option value="{{ $tahun->id }}" {{ $activeTahun == $tahun->id ? 'selected' : '' }}>
+                                TA {{ $tahun->tahun }}{{ $tahun->is_aktif ? ' (Aktif)' : '' }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <span
+                        class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[15px] pointer-events-none">
+                        expand_more
+                    </span>
+                </div>
+            </div>
+
             <x-modal-cetak
                 module="pendapatan"
-                :tahun-anggaran-list="\App\Models\TahunAnggaran::orderByDesc('tahun')->get()" />
+                :tahun-anggaran-list="$tahunAnggaranList"
+                :active-tahun="$activeTahun" />
 
             <a href="{{ route('pendapatan.create') }}"
                 class="inline-flex items-center gap-2 bg-gold text-gray-900 px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-gold-dark hover:shadow-md transition-all duration-200 active:scale-95">

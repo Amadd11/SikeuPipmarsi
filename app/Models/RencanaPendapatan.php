@@ -37,4 +37,9 @@ class RencanaPendapatan extends Model
     {
         return $this->morphMany(Transaksi::class, 'transaksable');
     }
+
+    public function details()
+    {
+        return $this->hasMany(RencanaPendapatanDetail::class, 'pendapatan_id');
+    }
 }

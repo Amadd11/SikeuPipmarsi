@@ -27,6 +27,11 @@ class RencanaPendapatanUpdateRequest extends FormRequest
             'nama_sumber' => 'required|string|max:200',
             'keterangan' => 'nullable|string',
             'jumlah_rencana' => 'required|numeric|min:0',
+            'details' => 'required|array|min:1',
+            'details.*.uraian' => 'required|string|max:255',
+            'details.*.satuan' => 'required|string|max:50',
+            'details.*.jumlah' => 'required|numeric|min:0',
+            'details.*.kuantitas' => 'required|integer|min:1',
         ];
     }
 
@@ -37,6 +42,10 @@ class RencanaPendapatanUpdateRequest extends FormRequest
             'nama_sumber' => 'Nama Sumber Pendapatan',
             'keterangan' => 'Keterangan',
             'jumlah_rencana' => 'Jumlah Rencana',
+            'details.*.uraian' => 'Uraian',
+            'details.*.satuan' => 'Satuan',
+            'details.*.jumlah' => 'Jumlah',
+            'details.*.kuantitas' => 'Kuantitas',
         ];
     }
 

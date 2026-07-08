@@ -34,78 +34,7 @@
                 @csrf
                 @method('PUT')
 
-                {{-- Nama Sumber Pendapatan --}}
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">
-                        Nama Sumber Pendapatan <span class="text-red-500">*</span>
-                    </label>
-                    <input type="text" name="nama_sumber" value="{{ old('nama_sumber', $pendapatan->nama_sumber) }}"
-                        placeholder="Contoh: Iuran Anggota Aktif"
-                        class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none @error('nama_sumber') @enderror">
-                    @error('nama_sumber')
-                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                {{-- Kategori --}}
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">
-                        Kategori <span class="text-red-500">*</span>
-                    </label>
-                    <select name="kategori_pendapatan_id"
-                        class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-white @error('kategori_pendapatan_id') @enderror">
-                        <option value="">Pilih kategori</option>
-                        @foreach ($kategoriList as $kategori)
-                            <option value="{{ $kategori->id }}" @selected(old('kategori_pendapatan_id', $pendapatan->kategori_pendapatan_id) == $kategori->id)>
-                                {{ $kategori->nama }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('kategori_pendapatan_id')
-                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                {{-- Deskripsi --}}
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">
-                        Keterangan / Rincian Perhitungan
-                    </label>
-                    <textarea name="keterangan" rows="3" placeholder="Contoh: Iuran bulanan anggota aktif @Rp 200.000 × 120 anggota"
-                        class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none resize-none @error('keterangan') @enderror">{{ old('keterangan', $pendapatan->keterangan) }}</textarea>
-                    @error('keterangan')
-                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                {{-- Rencana Anggaran --}}
-                @php
-                    $rencanaValue = old('jumlah_rencana', $pendapatan->jumlah_rencana);
-                @endphp
-                <div x-data="{
-                    raw: '{{ $rencanaValue }}',
-                    display: '{{ number_format((float) $rencanaValue, 0, ',', '.') }}',
-                    format(e) {
-                        let v = e.target.value.replace(/\D/g, '');
-                        this.raw = v;
-                        this.display = v ? new Intl.NumberFormat('id-ID').format(v) : '';
-                        e.target.value = this.display;
-                    }
-                }">
-                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">
-                        Rencana Anggaran <span class="text-red-500">*</span>
-                    </label>
-                    <div class="relative">
-                        <span
-                            class="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-400 font-medium">Rp</span>
-                        <input type="text" inputmode="numeric" x-model="display" @input="format($event)"
-                            class="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none @error('jumlah_rencana') border-red-300 @enderror">
-                    </div>
-                    <input type="hidden" name="jumlah_rencana" :value="raw">
-                    @error('jumlah_rencana')
-                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+                @include('pendapatan.form')
 
                 {{-- Actions --}}
                 <div class="flex justify-between items-center gap-3 pt-2 border-t border-gray-100">

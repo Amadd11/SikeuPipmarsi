@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RencanaPendapatanStoreRequest;
 use App\Http\Requests\RencanaPendapatanUpdateRequest;
 use App\Models\RencanaPendapatan;
+use App\Models\TahunAnggaran;
 use App\Services\RencanaPendapatanService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,16 +18,23 @@ class RencanaPendapatanController extends Controller
         protected RencanaPendapatanService $rencanaPendapatanService
     ) {}
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $pendapatan = $this->rencanaPendapatanService->getListByTahunAktif();
-        $summary    = $this->rencanaPendapatanService->getSummaryByTahunAktif();
+        $tahunAnggaranId = $request->integer('tahun') ?: optional(
+            TahunAnggaran::query()->where('is_aktif', true)->first()
+        )->id;
+
+        $pendapatan = $this->rencanaPendapatanService->getList($tahunAnggaranId);
+        $summary    = $this->rencanaPendapatanService->getSummary($tahunAnggaranId);
+        $tahunAnggaranList = TahunAnggaran::query()->orderByDesc('tahun')->get();
 
         return view('pendapatan.index', [
-            'pendapatan'     => $pendapatan,
-            'totalRencana'   => $summary['totalRencana'],
-            'totalRealisasi' => $summary['totalRealisasi'],
-            'sisaAnggaran'   => $summary['sisaAnggaran'],
+            'pendapatan'       => $pendapatan,
+            'totalRencana'     => $summary['totalRencana'],
+            'totalRealisasi'   => $summary['totalRealisasi'],
+            'sisaAnggaran'     => $summary['sisaAnggaran'],
+            'tahunAnggaranList'=> $tahunAnggaranList,
+            'activeTahun'      => $tahunAnggaranId,
         ]);
     }
 
@@ -34,7 +42,13 @@ class RencanaPendapatanController extends Controller
     {
         $options = $this->rencanaPendapatanService->getFormOptions();
 
-        return view('pendapatan.create', $options);
+        $initialDetails = old('details') 
+            ? $this->formatDetails(old('details')) 
+            : [['id' => 1, 'uraian' => '', 'satuan' => '', 'hargaRaw' => '', 'hargaDisplay' => '', 'kuantitas' => 1]];
+
+        return view('pendapatan.create', array_merge($options, [
+            'initialDetails' => $initialDetails,
+        ]));
     }
 
     public function store(RencanaPendapatanStoreRequest $request): RedirectResponse
@@ -58,10 +72,18 @@ class RencanaPendapatanController extends Controller
     {
         $options = $this->rencanaPendapatanService->getFormOptions();
 
-        return view('pendapatan.edit', [
-            'pendapatan'   => $pendapatan,
-            'kategoriList' => $options['kategoriList'],
-        ]);
+        $initialDetails = old('details') 
+            ? $this->formatDetails(old('details')) 
+            : $this->formatDetailsFromModel($pendapatan->details);
+
+        if (empty($initialDetails)) {
+            $initialDetails = [['id' => 1, 'uraian' => '', 'satuan' => '', 'hargaRaw' => '', 'hargaDisplay' => '', 'kuantitas' => 1]];
+        }
+
+        return view('pendapatan.edit', array_merge($options, [
+            'pendapatan'     => $pendapatan,
+            'initialDetails' => $initialDetails,
+        ]));
     }
 
     public function update(RencanaPendapatanUpdateRequest $request, RencanaPendapatan $pendapatan): RedirectResponse
@@ -92,5 +114,39 @@ class RencanaPendapatanController extends Controller
         return redirect()
             ->route('pendapatan.index')
             ->with('success', 'Rencana Pendapatan berhasil dihapus.');
+    }
+
+    private function formatDetails(?array $oldDetails): array
+    {
+        if (empty($oldDetails)) return [];
+        
+        $initialDetails = [];
+        foreach ($oldDetails as $idx => $d) {
+            $initialDetails[] = [
+                'id' => $idx,
+                'uraian' => $d['uraian'] ?? '',
+                'satuan' => $d['satuan'] ?? '',
+                'hargaRaw' => $d['jumlah'] ?? '',
+                'hargaDisplay' => isset($d['jumlah']) ? number_format((float) $d['jumlah'], 0, ',', '.') : '',
+                'kuantitas' => $d['kuantitas'] ?? 1
+            ];
+        }
+        return $initialDetails;
+    }
+
+    private function formatDetailsFromModel($details): array
+    {
+        $initialDetails = [];
+        foreach ($details as $d) {
+            $initialDetails[] = [
+                'id' => $d->id,
+                'uraian' => $d->uraian,
+                'satuan' => $d->satuan,
+                'hargaRaw' => $d->jumlah,
+                'hargaDisplay' => number_format((float) $d->jumlah, 0, ',', '.'),
+                'kuantitas' => $d->kuantitas
+            ];
+        }
+        return $initialDetails;
     }
 }

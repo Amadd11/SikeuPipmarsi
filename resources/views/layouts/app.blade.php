@@ -71,6 +71,57 @@
 
     </div>
 
+    {{-- Global Flash Messages --}}
+    @if (session('success'))
+        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
+            x-transition:enter="transform ease-out duration-300 transition"
+            x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+            x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
+            x-transition:leave="transition ease-in duration-100"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed bottom-4 right-4 z-50 flex items-center gap-3 bg-white border border-green-100 text-gray-800 shadow-xl rounded-2xl px-5 py-4 max-w-sm">
+            
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-green-50 flex items-center justify-center">
+                <span class="material-symbols-outlined text-green-500">check_circle</span>
+            </div>
+            
+            <div class="flex-1">
+                <h3 class="text-sm font-semibold text-gray-900">Berhasil!</h3>
+                <p class="text-xs text-gray-500 mt-0.5">{{ session('success') }}</p>
+            </div>
+            
+            <button @click="show = false" class="text-gray-400 hover:text-gray-600 transition">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
+            x-transition:enter="transform ease-out duration-300 transition"
+            x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+            x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
+            x-transition:leave="transition ease-in duration-100"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed bottom-4 right-4 z-50 flex items-center gap-3 bg-white border border-red-100 text-gray-800 shadow-xl rounded-2xl px-5 py-4 max-w-sm">
+            
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
+                <span class="material-symbols-outlined text-red-500">error</span>
+            </div>
+            
+            <div class="flex-1">
+                <h3 class="text-sm font-semibold text-gray-900">Gagal!</h3>
+                <p class="text-xs text-gray-500 mt-0.5">{{ session('error') }}</p>
+            </div>
+            
+            <button @click="show = false" class="text-gray-400 hover:text-gray-600 transition">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+        </div>
+    @endif
+
 </body>
 
 </html>
