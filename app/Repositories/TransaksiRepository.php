@@ -31,6 +31,31 @@ class TransaksiRepository
             ->paginate($perPage);
     }
 
+    /**
+     * Get all records without pagination (for report exports).
+     * Reuses the same filter logic as paginate().
+     */
+    public function getAll(
+        int $tahunAnggaranId,
+        array $filters = []
+    ): Collection {
+        return Transaksi::query()
+            ->with(['tahunAnggaran', 'bidangKerja', 'transaksable', 'user'])
+            ->where('tahun_anggaran_id', $tahunAnggaranId)
+            ->when($filters['jenis'] ?? null, fn($q, $v) => $q->where('jenis', $v))
+            ->when($filters['bidang_kerja_id'] ?? null, fn($q, $v) => $q->where('bidang_kerja_id', $v))
+            ->when($filters['tanggal_dari'] ?? null, fn($q, $v) => $q->whereDate('tanggal', '>=', $v))
+            ->when($filters['tanggal_sampai'] ?? null, fn($q, $v) => $q->whereDate('tanggal', '<=', $v))
+            ->when($filters['search'] ?? null, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('kode_transaksi', 'like', '%' . $search . '%')
+                        ->orWhere('uraian', 'like', '%' . $search . '%');
+                });
+            })
+            ->latest('tanggal')
+            ->get();
+    }
+
     public function create(array $data): Transaksi
     {
         /** @var Transaksi $transaksi */

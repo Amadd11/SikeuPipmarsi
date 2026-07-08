@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\RencanaPendapatan;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use stdClass;
 
 class RencanaPendapatanRepository
@@ -21,6 +22,18 @@ class RencanaPendapatanRepository
             ])
             ->latest()
             ->paginate($perPage);
+    }
+
+    /**
+     * Get all records without pagination (for report exports).
+     */
+    public function getAll(int $tahunAnggaranId): Collection
+    {
+        return RencanaPendapatan::query()
+            ->where('tahun_anggaran_id', $tahunAnggaranId)
+            ->with(['kategoriPendapatan', 'tahunAnggaran'])
+            ->latest()
+            ->get();
     }
 
     public function getSummary(

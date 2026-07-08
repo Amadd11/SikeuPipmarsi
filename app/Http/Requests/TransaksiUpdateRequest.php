@@ -27,7 +27,7 @@ class TransaksiUpdateRequest extends FormRequest
     {
         return [
             'kode_transaksi'    => [
-                'nullable',
+                'required',
                 'string',
                 'max:30',
                 Rule::unique('transaksi', 'kode_transaksi')->ignore($this->route('transaksi')),

@@ -40,11 +40,7 @@ class TransaksiService
     public function store(array $validated): Transaksi
     {
         return DB::transaction(function () use ($validated): Transaksi {
-            // Gunakan kode manual jika user mengisinya,
-            // generate otomatis jika kosong/tidak disertakan.
-            $kode = !empty($validated['kode_transaksi'])
-                ? $validated['kode_transaksi']
-                : $this->generateKode($validated['jenis']);
+            $kode = $validated['kode_transaksi'];
 
             $transaksi = $this->repository->create([
                 'kode_transaksi'    => $kode,
@@ -84,11 +80,7 @@ class TransaksiService
             $oldType = $transaksi->transaksable_type;
             $oldId   = $transaksi->transaksable_id;
 
-            // Tentukan kode: pakai input manual jika berbeda dari kode sekarang dan tidak kosong.
-            // Jika kosong dibiarkan (keep existing).
-            $kode = !empty($validated['kode_transaksi'])
-                ? $validated['kode_transaksi']
-                : $transaksi->kode_transaksi;
+            $kode = $validated['kode_transaksi'];
 
             $updated = $this->repository->update($transaksi, [
                 'kode_transaksi'    => $kode,
@@ -177,21 +169,4 @@ class TransaksiService
         };
     }
 
-    private function generateKode(string $jenis): string
-    {
-        // FIX: value yang dipakai di seluruh aplikasi adalah
-        // 'pemasukan' / 'pengeluaran', bukan 'masuk'.
-        $prefix = $jenis === 'pemasukan' ? 'M' : 'K';
-
-        do {
-            $kode = sprintf(
-                'TRX-%s-%s-%s',
-                $prefix,
-                now()->format('Ymd'),
-                strtoupper(Str::random(6))
-            );
-        } while (Transaksi::query()->where('kode_transaksi', $kode)->exists());
-
-        return $kode;
-    }
 }

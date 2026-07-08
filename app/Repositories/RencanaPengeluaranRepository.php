@@ -20,6 +20,21 @@ class RencanaPengeluaranRepository
             ->paginate($perPage);
     }
 
+    /**
+     * Get all records without pagination (for report exports).
+     */
+    public function getAll(
+        int $tahunAnggaranId,
+        ?int $bidangKerjaId = null
+    ): \Illuminate\Support\Collection {
+        return RencanaPengeluaran::query()
+            ->with(['kategoriPengeluaran', 'indikatorMutu', 'bidangKerja', 'tahunAnggaran'])
+            ->where('tahun_anggaran_id', $tahunAnggaranId)
+            ->when($bidangKerjaId, fn($q) => $q->where('bidang_kerja_id', $bidangKerjaId))
+            ->latest()
+            ->get();
+    }
+
     public function getSummary(
         int $tahunAnggaranId,
         ?int $bidangKerjaId = null

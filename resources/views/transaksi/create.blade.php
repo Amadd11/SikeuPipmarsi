@@ -27,7 +27,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {{-- Kode Transaksi (Input Manual) --}}
                 <div>
-                    <label class="block font-semibold text-gray-700 mb-1.5">Kode Transaksi / No. Kuitansi</label>
+                    <label class="block font-semibold text-gray-700 mb-1.5">Kode Transaksi / No. Kuitansi <span class="text-red-500">*</span></label>
                     <input type="text" name="kode_transaksi" value="{{ old('kode_transaksi') }}"
                         placeholder="Contoh: KWT-001 atau TRX-2026-05"
                         class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 bg-gray-50/30 text-gray-900 @error('kode_transaksi') border-red-500 @enderror">

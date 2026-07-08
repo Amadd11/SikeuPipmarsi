@@ -46,7 +46,15 @@
                 </div>
             </div>
 
-            {{-- Tombol Tambah --}}
+            {{-- Tombol Cetak & Tambah --}}
+            <x-modal-cetak
+                module="pengeluaran"
+                :show-bidang="true"
+                :tahun-anggaran-list="$tahunAnggaranList"
+                :bidang-kerja-list="$semuaBidang"
+                :active-tahun="$activeTahun"
+                :active-bidang="$activeBidang" />
+
             <a href="{{ route('pengeluaran.create') }}"
                 class="inline-flex items-center gap-2 bg-gold text-gray-900 px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-gold-dark hover:shadow-md transition-all duration-200 active:scale-95">
                 <span class="material-symbols-outlined text-[16px]">add</span>

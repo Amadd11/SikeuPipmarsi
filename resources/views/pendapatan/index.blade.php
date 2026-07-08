@@ -8,12 +8,17 @@
                 Pengelolaan seluruh sumber pendapatan organisasi PIPMARSI
             </p>
         </div>
+        <div class="flex items-center gap-2 flex-wrap">
+            <x-modal-cetak
+                module="pendapatan"
+                :tahun-anggaran-list="\App\Models\TahunAnggaran::orderByDesc('tahun')->get()" />
 
-        <a href="{{ route('pendapatan.create') }}"
-            class="inline-flex items-center gap-2 bg-gold text-gray-900 px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-gold-dark hover:shadow-md transition-all duration-200 active:scale-95">
-            <span class="material-symbols-outlined text-[16px]">add</span>
-            Tambah Pendapatan
-        </a>
+            <a href="{{ route('pendapatan.create') }}"
+                class="inline-flex items-center gap-2 bg-gold text-gray-900 px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-gold-dark hover:shadow-md transition-all duration-200 active:scale-95">
+                <span class="material-symbols-outlined text-[16px]">add</span>
+                Tambah Pendapatan
+            </a>
+        </div>
     </div>
 
     {{-- Card --}}

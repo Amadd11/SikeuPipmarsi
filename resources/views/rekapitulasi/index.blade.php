@@ -9,28 +9,37 @@
             </p>
         </div>
 
-        {{-- Filter Tahun Anggaran --}}
-        <div class="flex items-center gap-2" x-data="{
-            onChange(e) {
-                const url = new URL(window.location.href);
-                url.searchParams.set('tahun', e.target.value);
-                window.location.href = url.toString();
-            }
-        }">
-            <label class="text-xs text-gray-500 font-medium whitespace-nowrap">Tahun Anggaran:</label>
-            <div class="relative">
-                <select @change="onChange($event)"
-                    class="pl-3 pr-8 py-1.5 text-xs font-semibold rounded-lg border border-gray-200 bg-white text-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none appearance-none cursor-pointer">
-                    @foreach ($tahunAnggaranList as $tahun)
-                        <option value="{{ $tahun->id }}" {{ $activeTahun == $tahun->id ? 'selected' : '' }}>
-                            TA {{ $tahun->tahun }}{{ $tahun->is_aktif ? ' (Aktif)' : '' }}
-                        </option>
-                    @endforeach
-                </select>
-                <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[15px] pointer-events-none">
-                    expand_more
-                </span>
+        {{-- Filter & Action --}}
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+            {{-- Filter Tahun Anggaran --}}
+            <div class="flex items-center gap-2" x-data="{
+                onChange(e) {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('tahun', e.target.value);
+                    window.location.href = url.toString();
+                }
+            }">
+                <label class="text-xs text-gray-500 font-medium whitespace-nowrap">Tahun Anggaran:</label>
+                <div class="relative">
+                    <select @change="onChange($event)"
+                        class="pl-3 pr-8 py-1.5 text-xs font-semibold rounded-lg border border-gray-200 bg-white text-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none appearance-none cursor-pointer">
+                        @foreach ($tahunAnggaranList as $tahun)
+                            <option value="{{ $tahun->id }}" {{ $activeTahun == $tahun->id ? 'selected' : '' }}>
+                                TA {{ $tahun->tahun }}{{ $tahun->is_aktif ? ' (Aktif)' : '' }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[15px] pointer-events-none">
+                        expand_more
+                    </span>
+                </div>
             </div>
+
+            {{-- Tombol Cetak --}}
+            <x-modal-cetak
+                module="rekapitulasi"
+                :tahun-anggaran-list="$tahunAnggaranList"
+                :active-tahun="$activeTahun" />
         </div>
     </div>
 

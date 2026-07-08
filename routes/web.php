@@ -4,6 +4,7 @@ use App\Http\Controllers\AuditMonitoringController;
 use App\Http\Controllers\BidangKerjaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndikatorMutuController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekapitulasiController;
 use App\Http\Controllers\RencanaPendapatanController;
@@ -31,6 +32,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/rekapitulasi', [RekapitulasiController::class, 'index'])->name('rekapitulasi.index');
     Route::resource('audit-monitoring', AuditMonitoringController::class)->except('show');
     Route::resource('standar-tarif', StandarTarifController::class);
+
+    // ── Laporan / Export ──────────────────────────────────────────────────
+    Route::prefix('laporan')->name('laporan.')->group(function () {
+        Route::get('pendapatan', [LaporanController::class, 'pendapatan'])->name('pendapatan');
+        Route::get('pengeluaran', [LaporanController::class, 'pengeluaran'])->name('pengeluaran');
+        Route::get('transaksi', [LaporanController::class, 'transaksi'])->name('transaksi');
+        Route::get('rekapitulasi', [LaporanController::class, 'rekapitulasi'])->name('rekapitulasi');
+    });
 });
 
 Route::middleware(['auth', 'role:super_admin'])->group(function () {
