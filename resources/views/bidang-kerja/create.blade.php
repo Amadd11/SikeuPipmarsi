@@ -1,14 +1,8 @@
 <x-app-layout>
-    <x-slot:title>Tambah Bidang Kerja</x-slot>
+    <x-slot:title>Manajemen Bidang Kerja</x-slot>
 
     {{-- Header --}}
     <div class="border-b border-gray-100 pb-6">
-        <a href="{{ route('bidang-kerja.index') }}"
-            class="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-primary transition mb-3">
-            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-            Kembali ke Manajemen Bidang Kerja
-        </a>
-
         <h2 class="text-lg font-semibold text-gray-900">Tambah Bidang Kerja Baru</h2>
         <p class="text-sm text-gray-500 mt-1">
             Isi data di bawah untuk menambahkan bidang kerja baru ke dalam sistem

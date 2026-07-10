@@ -23,7 +23,7 @@ class TransaksiService
     public function getList(
         int $tahunAnggaranId,
         array $filters = [],
-        int $perPage = 15
+        int $perPage = 25
     ): LengthAwarePaginator {
         return $this->repository->paginate($tahunAnggaranId, $filters, $perPage);
     }

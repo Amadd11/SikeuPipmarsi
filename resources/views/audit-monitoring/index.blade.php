@@ -107,20 +107,6 @@
                 </select>
             </div>
 
-            {{-- Filter Indikator --}}
-            <div class="flex-1 min-w-[180px]">
-                <label class="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Indikator Mutu</label>
-                <select name="indikator_mutu_id"
-                    class="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-white">
-                    <option value="">Semua Indikator</option>
-                    @foreach ($indikatorMutuList as $indikator)
-                        <option value="{{ $indikator->id }}" @selected(($filters['indikator_mutu_id'] ?? '') == $indikator->id)>
-                            [{{ $indikator->kode }}] {{ Str::limit($indikator->nama, 50) }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
             {{-- Search --}}
             <div class="flex-1 min-w-[180px]">
                 <label class="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Cari</label>

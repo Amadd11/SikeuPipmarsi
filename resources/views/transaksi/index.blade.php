@@ -13,7 +13,6 @@
     {{-- Header & Action --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-5">
         <div>
-            <h1 class="text-xl font-bold text-gray-900 tracking-tight mb-1">Aktivitas & Realisasi</h1>
             <p class="text-xs text-gray-500">
                 Catat setiap transaksi keuangan yang terealisasi
             </p>
@@ -98,8 +97,8 @@
                     class="bg-gray-50 text-[10px] uppercase tracking-widest text-gray-500 font-semibold border-b border-gray-100">
                     <tr>
                         <th class="px-4 py-2.5 text-center w-10">#</th>
-                        <th class="px-4 py-2.5 whitespace-nowrap">Tanggal</th>
-                        <th class="px-4 py-2.5 whitespace-nowrap">Kode</th>
+                        <th class="px-4 py-2.5">Tanggal</th>
+                        <th class="px-4 py-2.5">Kode</th>
                         <th class="px-4 py-2.5 min-w-[200px]">Uraian</th>
                         <th class="px-4 py-2.5">Bidang</th>
                         <th class="px-4 py-2.5 text-center">Jenis</th>
@@ -126,14 +125,14 @@
                             </td>
 
                             {{-- Tanggal --}}
-                            <td class="px-4 py-2.5 align-top whitespace-nowrap">
+                            <td class="px-4 py-2.5 align-top">
                                 <span class="text-gray-900 font-medium">
                                     {{ \Carbon\Carbon::parse($row->tanggal)->translatedFormat('d M Y') }}
                                 </span>
                             </td>
 
                             {{-- Kode TRX --}}
-                            <td class="px-4 py-2.5 align-top whitespace-nowrap">
+                            <td class="px-4 py-2.5 align-top">
                                 <span
                                     class="font-bold text-gray-600 text-[11px] bg-gray-100 px-2 py-0.5 rounded border border-gray-200/50">
                                     {{ $row->kode_transaksi }}
@@ -160,19 +159,19 @@
                                     <span
                                         class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-green-50 text-green-700 text-[10px] font-semibold tracking-wide border border-green-100/50">
                                         <span class="material-symbols-outlined text-[12px]">south_west</span>
-                                        Masuk
+                                        Pemasukan
                                     </span>
                                 @else
                                     <span
                                         class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-red-50 text-red-700 text-[10px] font-semibold tracking-wide border border-red-100/50">
                                         <span class="material-symbols-outlined text-[12px]">north_east</span>
-                                        Keluar
+                                        Pengeluaran
                                     </span>
                                 @endif
                             </td>
 
                             {{-- Jumlah Nominal --}}
-                            <td class="px-4 py-2.5 text-right align-top whitespace-nowrap">
+                            <td class="px-4 py-2.5 text-right align-top">
                                 <span class="font-bold {{ $isPendapatan ? 'text-green-600' : 'text-gray-900' }}">
                                     {{ $isPendapatan ? '+' : '-' }} Rp {{ number_format($row->jumlah, 0, ',', '.') }}
                                 </span>
@@ -192,7 +191,7 @@
                             </td>
 
                             {{-- Oleh --}}
-                            <td class="px-4 py-2.5 align-top whitespace-nowrap text-gray-500">
+                            <td class="px-4 py-2.5 align-top text-gray-500">
                                 {{ $row->user ? $row->user->name : 'Sistem' }}
                             </td>
 

@@ -23,7 +23,7 @@ class RencanaPengeluaranUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'tahun_anggaran_id' => 'required|exists:tahun_anggaran,id',
             'bidang_kerja_id' => 'required|exists:bidang_kerja,id',
             'kategori_pengeluaran_id' => 'required|exists:kategori_pengeluaran,id',
             'indikator_mutu_id' => 'nullable|exists:indikator_mutu,id',

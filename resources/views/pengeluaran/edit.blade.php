@@ -1,18 +1,11 @@
 <x-app-layout>
-    <x-slot:title>Edit Pengeluaran</x-slot>
+    <x-slot:title>Rencana Pengeluaran</x-slot>
 
     {{-- Header --}}
     <div class="border-b border-gray-100 pb-6">
-
-        <a href="{{ route('pengeluaran.index', ['tahun' => $pengeluaran->tahun_anggaran_id, 'bidang' => $pengeluaran->bidang_kerja_id]) }}"
-            class="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-primary transition mb-3">
-            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-            Kembali ke Rencana Pengeluaran
-        </a>
-
-        <h2 class="text-lg font-semibold text-gray-900">Edit Pos Anggaran</h2>
+        <h2 class="text-lg font-semibold text-gray-900">Edit Rencana Pengeluaran</h2>
         <p class="text-sm text-gray-500 mt-1">
-            Perbarui informasi pos anggaran
+            Perbarui informasi rencana pengeluaran
             <span class="font-medium text-gray-700">{{ $pengeluaran->nama_kegiatan }}</span>
         </p>
     </div>

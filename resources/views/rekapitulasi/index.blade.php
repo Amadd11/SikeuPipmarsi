@@ -49,9 +49,9 @@
             <div class="w-1 h-5 bg-teal-500 rounded-full"></div>
             <h2 class="font-semibold text-gray-800 text-sm">Ringkasan Pendapatan</h2>
             <a href="{{ route('pendapatan.index') }}"
-                class="ml-auto text-[11px] text-primary font-medium hover:underline flex items-center gap-0.5">
+                class="ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 text-gray-500 hover:bg-teal-50 hover:text-teal-600 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all duration-200 group">
                 Lihat detail
-                <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+                <span class="material-symbols-outlined text-[14px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
             </a>
         </div>
 
@@ -106,34 +106,76 @@
         </div>
     </div>
 
-    {{-- ── Section 2: Ringkasan Anggaran Per Bidang (Pengeluaran) ─────────── --}}
+    {{-- ── Section 2: Ringkasan Pengeluaran ─────────────────────────────────── --}}
+    <div class="mb-6">
+        <div class="flex items-center gap-2 mb-3">
+            <div class="w-1 h-5 bg-rose-500 rounded-full"></div>
+            <h2 class="font-semibold text-gray-800 text-sm">Ringkasan Pengeluaran</h2>
+            <a href="{{ route('pengeluaran.index') }}"
+                class="ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 text-gray-500 hover:bg-rose-50 hover:text-rose-600 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all duration-200 group">
+                Lihat detail
+                <span class="material-symbols-outlined text-[14px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {{-- Total Rencana --}}
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-7 h-7 rounded-lg bg-gray-100 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-gray-500 text-[16px]">account_balance_wallet</span>
+                    </div>
+                    <p class="text-[10px] uppercase tracking-wider text-gray-400 font-semibold">Total Anggaran</p>
+                </div>
+                <p class="text-lg font-bold text-gray-900">Rp {{ number_format($totalAnggaran, 0, ',', '.') }}</p>
+                @php $pctPeng = $totalAnggaran > 0 ? round(($totalRealisasiPeng / $totalAnggaran) * 100, 1) : 0; @endphp
+                <p class="text-[10px] text-gray-400 mt-1">Plafon anggaran belanja</p>
+            </div>
+
+            {{-- Total Realisasi --}}
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-7 h-7 rounded-lg bg-amber-50 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-amber-600 text-[16px]">receipt_long</span>
+                    </div>
+                    <p class="text-[10px] uppercase tracking-wider text-amber-600 font-semibold">Realisasi</p>
+                </div>
+                <p class="text-lg font-bold text-amber-700">Rp {{ number_format($totalRealisasiPeng, 0, ',', '.') }}</p>
+                <div class="mt-2">
+                    <div class="flex justify-between text-[10px] text-gray-400 mb-1">
+                        <span>Serapan</span>
+                        <span class="font-semibold text-amber-700">{{ $pctPeng }}%</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-amber-500 rounded-full" style="width: {{ min($pctPeng, 100) }}%"></div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Sisa --}}
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-7 h-7 rounded-lg bg-teal-50 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-teal-600 text-[16px]">account_balance</span>
+                    </div>
+                    <p class="text-[10px] uppercase tracking-wider text-gray-400 font-semibold">Sisa Anggaran</p>
+                </div>
+                <p class="text-lg font-bold {{ $sisaAnggaran >= 0 ? 'text-gray-900' : 'text-rose-600' }}">
+                    Rp {{ number_format($sisaAnggaran, 0, ',', '.') }}
+                    @if ($sisaAnggaran < 0) <span class="text-xs font-normal text-rose-500">(minus)</span> @endif
+                </p>
+                <p class="text-[10px] text-gray-400 mt-1">Sisa anggaran yang belum terpakai</p>
+            </div>
+        </div>
+    </div>
+
+    {{-- ── Section 3: Ringkasan Anggaran Per Bidang ─────────── --}}
     <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm mb-6">
 
         <div class="px-5 py-4 border-b border-gray-100 flex items-center gap-2">
             <div class="w-1 h-5 bg-primary rounded-full"></div>
             <span class="material-symbols-outlined text-gray-400 text-[18px]">pie_chart</span>
-            <h2 class="font-semibold text-gray-900 text-sm">Ringkasan Anggaran Per Bidang</h2>
-            <a href="{{ route('pengeluaran.index') }}"
-                class="ml-auto text-[11px] text-primary font-medium hover:underline flex items-center gap-0.5">
-                Lihat detail
-                <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
-            </a>
-        </div>
-
-        {{-- Summary Bar --}}
-        <div class="px-5 py-3 bg-gray-50/60 border-b border-gray-100 grid grid-cols-3 gap-4 text-xs">
-            <div>
-                <p class="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Total Anggaran</p>
-                <p class="font-bold text-gray-900">Rp {{ number_format($totalAnggaran, 0, ',', '.') }}</p>
-            </div>
-            <div>
-                <p class="text-[10px] uppercase tracking-wider text-green-600 mb-0.5">Total Realisasi</p>
-                <p class="font-bold text-green-700">Rp {{ number_format($totalRealisasiPeng, 0, ',', '.') }}</p>
-            </div>
-            <div>
-                <p class="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Sisa Anggaran</p>
-                <p class="font-bold text-gray-900">Rp {{ number_format($sisaAnggaran, 0, ',', '.') }}</p>
-            </div>
+            <h2 class="font-semibold text-gray-900 text-sm">Rincian Anggaran Per Bidang</h2>
         </div>
 
         <div class="overflow-x-auto">
@@ -203,7 +245,7 @@
 
     </div>
 
-    {{-- ── Section 3: Ringkasan Capaian Indikator Mutu Per Bidang ──────────── --}}
+    {{-- ── Section 4: Ringkasan Capaian Indikator Mutu Per Bidang ──────────── --}}
     <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm mb-5">
 
         <div class="px-5 py-4 border-b border-gray-100 flex items-center gap-2">
@@ -211,9 +253,9 @@
             <span class="material-symbols-outlined text-gray-400 text-[18px]">verified</span>
             <h2 class="font-semibold text-gray-900 text-sm">Ringkasan Capaian Indikator Mutu Per Bidang</h2>
             <a href="{{ route('indikator-mutu.index') }}"
-                class="ml-auto text-[11px] text-primary font-medium hover:underline flex items-center gap-0.5">
+                class="ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 text-gray-500 hover:bg-indigo-50 hover:text-indigo-600 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all duration-200 group">
                 Lihat detail
-                <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+                <span class="material-symbols-outlined text-[14px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
             </a>
         </div>
 

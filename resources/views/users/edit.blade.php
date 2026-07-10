@@ -1,14 +1,8 @@
 <x-app-layout>
-    <x-slot:title>Edit User</x-slot>
+    <x-slot:title>Manajemen User</x-slot>
 
     {{-- Header --}}
     <div class="border-b border-gray-100 pb-6">
-        <a href="{{ route('users.index') }}"
-            class="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-primary transition mb-3">
-            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-            Kembali ke Manajemen User
-        </a>
-
         <h2 class="text-lg font-semibold text-gray-900">Edit User: {{ $user->name }}</h2>
         <p class="text-sm text-gray-500 mt-1">
             Perbarui data akun pengguna. Kosongkan password jika tidak ingin mengubah.

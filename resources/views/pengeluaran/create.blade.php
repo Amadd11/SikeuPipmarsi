@@ -1,16 +1,9 @@
 <x-app-layout>
-    <x-slot:title>Tambah Pengeluaran</x-slot>
+    <x-slot:title>Rencana Pengeluaran</x-slot>
 
     {{-- Header --}}
     <div class="border-b border-gray-100 pb-6">
-
-        <a href="{{ route('pengeluaran.index') }}"
-            class="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-primary transition mb-3">
-            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-            Kembali ke Rencana Pengeluaran
-        </a>
-
-        <h2 class="text-lg font-semibold text-gray-900">Tambah Pos Anggaran Baru</h2>
+        <h2 class="text-lg font-semibold text-gray-900">Tambah Rencana Pengeluaran</h2>
         <p class="text-sm text-gray-500 mt-1">
             Tambahkan rencana pengeluaran ke bidang kerja yang sesuai
         </p>

@@ -139,9 +139,9 @@
                             {{-- Aksi --}}
                             <td class="px-4 py-3 align-middle">
                                 <div class="flex items-center justify-center gap-1.5">
-                                    <a href="{{ route('standar-tarif.show', $item->id) }}"
-                                        class="w-7 h-7 rounded-md border border-gray-200 flex items-center justify-center text-gray-500 hover:border-indigo-400 hover:text-indigo-600 transition"
-                                        title="Detail">
+                                    <a href="{{ Storage::url($item->file) }}" target="_blank"
+                                        class="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-indigo-50 hover:border-indigo-300 hover:text-indigo-600 transition-all duration-200"
+                                        title="Buka / Unduh Dokumen">
                                         <span class="material-symbols-outlined text-[16px]">visibility</span>
                                     </a>
                                     <a href="{{ route('standar-tarif.edit', $item->id) }}"

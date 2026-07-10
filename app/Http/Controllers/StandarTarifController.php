@@ -56,10 +56,7 @@ class StandarTarifController extends Controller
             ->with('success', 'Standar tarif berhasil ditambahkan.');
     }
 
-    public function show(StandarTarif $standarTarif): View
-    {
-        return view('standar-tarif.show', compact('standarTarif'));
-    }
+
 
     public function edit(StandarTarif $standarTarif): View
     {

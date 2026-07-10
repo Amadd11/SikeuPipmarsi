@@ -19,9 +19,37 @@
             <p class="text-xs text-gray-500">Pantau kinerja keuangan dan mutu secara real-time.</p>
         </div>
         
-        <div class="inline-flex items-center gap-2 text-xs font-semibold text-gray-600 bg-white border border-gray-200 px-4 py-2 rounded-full shadow-sm hover:shadow-md transition-shadow cursor-default">
-            <span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1">calendar_today</span>
-            {{ now()->translatedFormat('d F Y') }}
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+            
+            {{-- Filter Tahun Anggaran --}}
+            <div class="flex items-center gap-2" x-data="{
+                onChange(e) {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('tahun', e.target.value);
+                    window.location.href = url.toString();
+                }
+            }">
+                <label class="text-xs text-gray-500 font-medium whitespace-nowrap">Tahun:</label>
+                <div class="relative">
+                    <select @change="onChange($event)"
+                        class="pl-3 pr-8 py-1.5 text-xs font-semibold rounded-lg border border-gray-200 bg-white text-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none appearance-none cursor-pointer">
+                        @foreach ($tahunAnggaranList as $tahun)
+                            <option value="{{ $tahun->id }}" {{ ($tahunAktif?->id ?? null) == $tahun->id ? 'selected' : '' }}>
+                                TA {{ $tahun->tahun }}{{ $tahun->is_aktif ? ' (Aktif)' : '' }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <span
+                        class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[15px] pointer-events-none">
+                        expand_more
+                    </span>
+                </div>
+            </div>
+
+            <div class="inline-flex items-center gap-2 text-xs font-semibold text-gray-600 bg-white border border-gray-200 px-4 py-2 rounded-full shadow-sm hover:shadow-md transition-shadow cursor-default">
+                <span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1">calendar_today</span>
+                {{ now()->translatedFormat('d F Y') }}
+            </div>
         </div>
     </div>
 
@@ -42,7 +70,7 @@
             variant="success" />
 
         <x-stat-card
-            label="Anggaran Belanja"
+            label="Rencana Pengeluaran"
             :value="'Rp ' . number_format($totalAnggaranBelanja, 0, ',', '.')"
             :sub="'Serapan ' . $serapan . '% dari anggaran'"
             icon="account_balance_wallet"
@@ -161,43 +189,33 @@
 
         {{-- Audit & Standar Tarif --}}
         <div class="flex flex-col gap-5">
-            {{-- Audit Monitoring --}}
-            <div class="bg-white rounded-3xl border border-gray-100 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.04)] p-5 flex-1 relative overflow-hidden group">
-                <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-violet-100 rounded-full blur-[30px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div class="flex justify-between mb-4 relative z-10">
+            <div class="bg-white rounded-3xl border border-gray-100 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.04)] p-6 flex-1 relative overflow-hidden group flex flex-col justify-between">
+                <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-blue-50 rounded-full blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                
+                <div class="flex items-center justify-between relative z-10 mb-8">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-2xl bg-violet-50 flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-violet-600 text-[20px]" style="font-variation-settings: 'FILL' 1">manage_search</span>
-                        </div>
-                        <h3 class="font-bold text-gray-800 text-sm tracking-wide">Audit</h3>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-3 text-center relative z-10">
-                    <div class="bg-gray-50/80 border border-gray-100 rounded-2xl p-3">
-                        <p class="text-3xl font-black text-gray-900 tracking-tighter">{{ $totalAudit }}</p>
-                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Total</p>
-                    </div>
-                    <div class="bg-emerald-50 border border-emerald-100/50 rounded-2xl p-3">
-                        <p class="text-3xl font-black text-emerald-600 tracking-tighter">{{ $auditSelesai }}</p>
-                        <p class="text-[10px] font-bold text-emerald-600/80 uppercase tracking-widest mt-1">Selesai</p>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Standar Tarif --}}
-            <div class="bg-white rounded-3xl border border-gray-100 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.04)] p-5 relative overflow-hidden group">
-                <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-rose-100 rounded-full blur-[30px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div class="flex items-center justify-between relative z-10">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-2xl bg-rose-50 flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-rose-500 text-[20px]" style="font-variation-settings: 'FILL' 1">description</span>
+                        <div class="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100/50">
+                            <span class="material-symbols-outlined text-blue-600 text-[24px]" style="font-variation-settings: 'FILL' 1">manage_search</span>
                         </div>
                         <div>
-                            <p class="text-sm font-bold text-gray-800 tracking-wide">Standar Tarif</p>
-                            <a href="{{ route('standar-tarif.index') }}" class="text-[10px] text-primary font-bold uppercase tracking-widest hover:underline">Kelola Data →</a>
+                            <h3 class="font-bold text-gray-800 text-lg tracking-wide">Audit & Monitoring</h3>
+                            <p class="text-gray-400 text-xs font-medium">Pemantauan Mutu Internal</p>
                         </div>
                     </div>
-                    <p class="text-3xl font-black text-gray-900 tracking-tighter">{{ $totalStandarTarif }}</p>
+                    <a href="{{ route('audit-monitoring.index') }}" class="w-8 h-8 rounded-full bg-gray-50 hover:bg-gray-100 flex items-center justify-center transition-colors border border-gray-200 text-gray-400 hover:text-gray-600" title="Kelola Data">
+                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    </a>
+                </div>
+
+                <div class="relative z-10 grid grid-cols-2 gap-4 mt-auto">
+                    <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 text-center group-hover:bg-gray-100/80 transition-colors">
+                        <p class="text-4xl font-black text-gray-900 tracking-tighter">{{ $totalAudit }}</p>
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Total Audit</p>
+                    </div>
+                    <div class="bg-emerald-50 rounded-2xl p-4 border border-emerald-100/50 text-center group-hover:bg-emerald-100/50 transition-colors">
+                        <p class="text-4xl font-black text-emerald-600 tracking-tighter">{{ $auditSelesai }}</p>
+                        <p class="text-[10px] font-bold text-emerald-600/80 uppercase tracking-widest mt-1">Telah Selesai</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -259,7 +277,7 @@
                 </a>
             </div>
 
-            <div class="p-3 flex-1 overflow-y-auto max-h-[340px]">
+            <div class="p-3 flex-1">
                 @forelse ($transaksiTerbaru as $tx)
                     <div class="flex items-center gap-3 p-3 rounded-2xl hover:bg-gray-50 transition-colors group">
                         <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm border border-gray-100
@@ -269,7 +287,15 @@
                             </span>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-xs font-bold text-gray-800 truncate">{{ $tx->uraian ?? '-' }}</p>
+                            @php
+                                $alokasiName = '-';
+                                if ($tx->transaksable) {
+                                    $alokasiName = $tx->jenis === 'pemasukan' 
+                                        ? $tx->transaksable->nama_sumber 
+                                        : $tx->transaksable->nama_kegiatan;
+                                }
+                            @endphp
+                            <p class="text-xs font-bold text-gray-800 truncate" title="{{ $alokasiName }}">{{ $alokasiName }}</p>
                             <p class="text-[10px] text-gray-400 font-medium mt-0.5 tracking-wide">
                                 {{ $tx->tanggal?->format('d M') }}
                                 @if ($tx->bidangKerja)
@@ -279,8 +305,7 @@
                         </div>
                         <div class="text-right shrink-0">
                             <p class="text-xs font-black {{ $tx->jenis === 'pemasukan' ? 'text-emerald-600' : 'text-gray-700' }}">
-                                {{ $tx->jenis === 'pemasukan' ? '+' : '-' }}
-                                Rp{{ number_format($tx->jumlah / 1000) }}k
+                                {{ $tx->jenis === 'pemasukan' ? '+' : '-' }} Rp {{ number_format($tx->jumlah, 0, ',', '.') }}
                             </p>
                         </div>
                     </div>

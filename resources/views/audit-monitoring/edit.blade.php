@@ -1,14 +1,8 @@
 <x-app-layout>
-    <x-slot:title>Edit Audit Monitoring</x-slot>
+    <x-slot:title>Audit & Monitoring</x-slot>
 
     {{-- Header --}}
     <div class="border-b border-gray-100 pb-6">
-        <a href="{{ route('audit-monitoring.index') }}"
-            class="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-primary transition mb-3">
-            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-            Kembali ke Audit & Monitoring
-        </a>
-
         <h2 class="text-lg font-semibold text-gray-900">Edit Data Audit & Monitoring</h2>
         <p class="text-sm text-gray-500 mt-1">
             Perbarui catatan audit dan monitoring untuk indikator yang dipilih
@@ -32,7 +26,14 @@
         {{-- Form --}}
         <div class="lg:col-span-2">
             <form method="POST" action="{{ route('audit-monitoring.update', $auditMonitoring->id) }}"
-                class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 space-y-5">
+                class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 space-y-5"
+                x-data="auditForm({
+                    tahunId: '{{ old('tahun_anggaran_id', $auditMonitoring->tahun_anggaran_id) }}',
+                    indikatorId: '{{ old('indikator_mutu_id', $auditMonitoring->indikator_mutu_id) }}',
+                    existingAudits: {{ Js::from($existingAudits) }},
+                    indikatorList: {{ Js::from($indikatorMutuList) }},
+                    currentAuditIndikatorId: {{ $auditMonitoring->indikator_mutu_id }}
+                })">
                 @csrf
                 @method('PUT')
 
@@ -44,15 +45,8 @@
                         <label class="block text-xs font-semibold text-gray-700 mb-1.5">
                             Indikator Mutu <span class="text-red-500">*</span>
                         </label>
-                        <select name="indikator_mutu_id"
+                        <select name="indikator_mutu_id" x-ref="indikatorSelect"
                             class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-white @error('indikator_mutu_id') border-red-300 @enderror">
-                            <option value="">Pilih indikator mutu</option>
-                            @foreach ($indikatorMutuList as $indikator)
-                                <option value="{{ $indikator->id }}"
-                                    @selected(old('indikator_mutu_id', $auditMonitoring->indikator_mutu_id) == $indikator->id)>
-                                    [{{ $indikator->kode }}] {{ $indikator->nama }}
-                                </option>
-                            @endforeach
                         </select>
                         @error('indikator_mutu_id')
                             <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
@@ -64,7 +58,7 @@
                         <label class="block text-xs font-semibold text-gray-700 mb-1.5">
                             Tahun Anggaran <span class="text-red-500">*</span>
                         </label>
-                        <select name="tahun_anggaran_id"
+                        <select name="tahun_anggaran_id" x-model="tahunId"
                             class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-white @error('tahun_anggaran_id') border-red-300 @enderror">
                             <option value="">Pilih tahun anggaran</option>
                             @foreach ($tahunAnggaranList as $ta)
@@ -257,5 +251,9 @@
         </div>
 
     </div>
+
+    @push('scripts')
+        <script src="{{ asset('js/audit-form.js') }}"></script>
+    @endpush
 
 </x-app-layout>

@@ -15,11 +15,16 @@ use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public function index(): View
+    public function index(\Illuminate\Http\Request $request): View
     {
-        // ── Tahun Anggaran Aktif ──────────────────────────────────────────────
-        $tahunAktif = TahunAnggaran::query()->where('is_aktif', true)->first();
-        $tahunId    = $tahunAktif?->id;
+        $tahunAnggaranList = TahunAnggaran::query()->orderByDesc('tahun')->get();
+
+        // ── Tahun Anggaran Aktif / Terpilih ───────────────────────────────────
+        $tahunId = $request->integer('tahun') ?: optional(
+            TahunAnggaran::query()->where('is_aktif', true)->first()
+        )->id;
+
+        $tahunAktif = $tahunId ? TahunAnggaran::find($tahunId) : null;
 
         // ── Keuangan ──────────────────────────────────────────────────────────
         $totalPendapatanRencana = RencanaPendapatan::query()
@@ -91,10 +96,10 @@ class DashboardController extends Controller
 
         // ── Transaksi Terbaru ─────────────────────────────────────────────────
         $transaksiTerbaru = Transaksi::query()
-            ->with('bidangKerja')
+            ->with(['bidangKerja', 'transaksable'])
             ->when($tahunId, fn ($q) => $q->where('tahun_anggaran_id', $tahunId))
             ->latest('tanggal')
-            ->limit(6)
+            ->limit(5)
             ->get();
 
         // ── Peringatan ────────────────────────────────────────────────────────
@@ -127,6 +132,7 @@ class DashboardController extends Controller
         }
 
         return view('dashboard', compact(
+            'tahunAnggaranList',
             'tahunAktif',
             'totalPendapatanRencana',
             'totalAnggaranBelanja',

@@ -1,14 +1,8 @@
 <x-app-layout>
-    <x-slot:title>Edit Standar Tarif</x-slot>
+    <x-slot:title>Standar Tarif</x-slot>
 
     {{-- Header --}}
     <div class="border-b border-gray-100 pb-6">
-        <a href="{{ route('standar-tarif.index') }}"
-            class="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-primary transition mb-3">
-            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-            Kembali ke Standar Tarif
-        </a>
-
         <h2 class="text-lg font-semibold text-gray-900">Edit Standar Tarif</h2>
         <p class="text-sm text-gray-500 mt-1">
             Perbarui informasi atau ganti file PDF dokumen standar tarif

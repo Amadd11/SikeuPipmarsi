@@ -75,7 +75,7 @@
                             Indikator Mutu
                             <span class="text-gray-400 font-normal">(opsional)</span>
                         </label>
-                        <select name="indikator_mutu_id"
+                        <select name="indikator_mutu_id" x-data x-init="new TomSelect($el, { maxOptions: null })"
                             class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-white @error('indikator_mutu_id') @enderror">
                             <option value="">Tidak terkait indikator</option>
                             @foreach ($indikatorList as $indikator)
@@ -92,40 +92,7 @@
                 </div>
 
                 {{-- Detail RK Belanja --}}
-                <div x-data="{
-                    details: {{ json_encode($initialDetails) }},
-                    get grandTotal() {
-                        return this.details.reduce((sum, item) => {
-                            let h = parseInt(item.hargaRaw) || 0;
-                            let k = parseInt(item.kuantitas) || 0;
-                            return sum + (h * k);
-                        }, 0);
-                    },
-                    get grandTotalDisplay() {
-                        return this.grandTotal > 0 ? new Intl.NumberFormat('id-ID').format(this.grandTotal) : '';
-                    },
-                    addDetail() {
-                        this.details.push({
-                            id: Date.now(),
-                            uraian: '',
-                            satuan: '',
-                            hargaRaw: '',
-                            hargaDisplay: '',
-                            kuantitas: 1
-                        });
-                    },
-                    removeDetail(id) {
-                        if (this.details.length > 1) {
-                            this.details = this.details.filter(d => d.id !== id);
-                        }
-                    },
-                    formatHarga(item, e) {
-                        let v = e.target.value.replace(/\D/g, '');
-                        item.hargaRaw = v;
-                        item.hargaDisplay = v ? new Intl.NumberFormat('id-ID').format(v) : '';
-                        e.target.value = item.hargaDisplay;
-                    }
-                }" class="space-y-4">
+                <div x-data="rincianForm({ details: {{ json_encode($initialDetails) }} })" class="space-y-4">
                     <div class="flex items-center justify-between">
                         <label class="block text-sm font-semibold text-gray-900">
                             Rincian Pengeluaran <span class="text-red-500">*</span>
@@ -195,3 +162,7 @@
                         </div>
                     </div>
                 </div>
+
+@push('scripts')
+    <script src="{{ asset('js/rincian-form.js') }}"></script>
+@endpush

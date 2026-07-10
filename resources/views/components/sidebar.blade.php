@@ -25,13 +25,13 @@
             </div>
 
             <div class="leading-none">
-                <span class="text-xl font-black text-white">SIKEU</span>
+                <span class="text-xl font-black text-white">SIPANDA</span>
                 <span class="text-xl font-black text-gold">PIPMARSI</span>
             </div>
         </div>
 
         <p class="text-[10px] text-indigo-200/50 mt-1.5 tracking-[0.15em] font-medium">
-            SISTEM INFORMASI KEUANGAN
+            SISTEM INFORMASI PENGELOLAAN DANA & AKUNTABILITAS PIPMARSI
         </p>
 
         <div
@@ -89,29 +89,19 @@
             </x-nav-link>
         </div>
 
-        {{-- OUTPUT --}}
-        <div>
-            <p class="px-4 mb-3 text-[10px] font-bold tracking-[0.2em] uppercase text-indigo-300/40">
-                Output
-            </p>
-            <x-nav-link href="#" icon="print" :active="request()->routeIs('cetak-laporan.*')">
-                Cetak Laporan
-            </x-nav-link>
-        </div>
-
         {{-- ADMINISTRASI (Super Admin Only) --}}
         @role('super_admin')
-        <div>
-            <p class="px-4 mb-3 text-[10px] font-bold tracking-[0.2em] uppercase text-indigo-300/40">
-                Administrasi
-            </p>
-            <x-nav-link href="{{ route('users.index') }}" icon="manage_accounts" :active="request()->routeIs('users.*')">
-                Manajemen User
-            </x-nav-link>
-            <x-nav-link href="{{ route('bidang-kerja.index') }}" icon="category" :active="request()->routeIs('bidang-kerja.*')">
-                Bidang Kerja
-            </x-nav-link>
-        </div>
+            <div>
+                <p class="px-4 mb-3 text-[10px] font-bold tracking-[0.2em] uppercase text-indigo-300/40">
+                    Administrasi
+                </p>
+                <x-nav-link href="{{ route('users.index') }}" icon="manage_accounts" :active="request()->routeIs('users.*')">
+                    Manajemen User
+                </x-nav-link>
+                <x-nav-link href="{{ route('bidang-kerja.index') }}" icon="category" :active="request()->routeIs('bidang-kerja.*')">
+                    Bidang Kerja
+                </x-nav-link>
+            </div>
         @endrole
     </nav>
 

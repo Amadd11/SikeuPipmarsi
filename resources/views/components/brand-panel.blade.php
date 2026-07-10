@@ -4,8 +4,7 @@
     {{-- Latar Belakang Cahaya (Ambient Glowing Orbs) --}}
     <div class="absolute -top-40 -right-40 w-150 h-150 bg-gold/10 rounded-full blur-[120px] pointer-events-none">
     </div>
-    <div
-        class="absolute -bottom-40 -left-40 w-125 h-125 bg-primary/20 rounded-full blur-[100px] pointer-events-none">
+    <div class="absolute -bottom-40 -left-40 w-125 h-125 bg-primary/20 rounded-full blur-[100px] pointer-events-none">
     </div>
 
     {{-- Grid Pattern Halus untuk Tekstur --}}
@@ -54,7 +53,7 @@
         <div class="flex items-center gap-4">
             <div class="h-px w-16 bg-linear-to-r from-transparent to-purple-300/50"></div>
             <span class="uppercase text-[10px] tracking-[4px] font-bold">
-                Sistem Informasi Keuangan
+                SISTEM INFORMASI PENGELOLAAN DANA & AKUNTABILITAS PIPMARSI
             </span>
             <div class="h-px w-16 bg-linear-to-l from-transparent to-purple-300/50"></div>
         </div>

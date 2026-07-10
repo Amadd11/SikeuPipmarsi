@@ -1,5 +1,5 @@
 <x-guest-layout>
-    @section('title', 'Login SikeuPIPMARSI')
+    @section('title', 'SIPANDA PIPMARSI')
 
     <div style="font-family: 'Poppins', sans-serif;">
 
@@ -8,7 +8,7 @@
         </div>
 
         <h1 class="text-4xl font-semibold text-gray-900 mb-2">Masuk</h1>
-        <p class="text-gray-600 mb-10">Selamat datang kembali di sistem keuangan PIPMARSI</p>
+        <p class="text-gray-600 mb-10">Transformasi Digital Tata Kelola Keuangan PIPMARSI</p>
 
         <x-auth-session-status class="mb-6" :status="session('status')" />
 
@@ -39,7 +39,7 @@
 
             {{-- Remember Me --}}
             <div class="flex items-center gap-3">
-                <input id="remember_me" name="remember" type="checkbox"
+                <input id="remember_me" name="remember" type="checkbox" value="1"
                     class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary/20 cursor-pointer" />
                 <label for="remember_me" class="text-sm text-gray-600 cursor-pointer select-none">
                     Ingat saya

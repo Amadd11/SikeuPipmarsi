@@ -86,7 +86,7 @@ class AuditMonitoringController extends Controller
 
     public function edit(AuditMonitoring $auditMonitoring): View
     {
-        $options = $this->service->getFormOptions();
+        $options = $this->service->getFormOptions($auditMonitoring);
 
         return view('audit-monitoring.edit', [
             'auditMonitoring' => $auditMonitoring,

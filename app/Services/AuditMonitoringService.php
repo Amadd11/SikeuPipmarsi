@@ -25,8 +25,15 @@ class AuditMonitoringService
         );
     }
 
-    public function getFormOptions(): array
+    public function getFormOptions(?AuditMonitoring $currentAudit = null): array
     {
+        $existingAudits = DB::table('audit_monitorings')
+            ->select('tahun_anggaran_id', 'indikator_mutu_id')
+            ->get()
+            ->groupBy('tahun_anggaran_id')
+            ->map(fn($group) => $group->pluck('indikator_mutu_id')->toArray())
+            ->toArray();
+
         return [
             'indikatorMutuList' => IndikatorMutu::query()
                 ->with('bidangKerja')
@@ -40,6 +47,9 @@ class AuditMonitoringService
             'tahunAktif' => TahunAnggaran::query()
                 ->where('is_aktif', true)
                 ->first(),
+                
+            'existingAudits' => $existingAudits,
+            'currentAudit' => $currentAudit,
         ];
     }
 

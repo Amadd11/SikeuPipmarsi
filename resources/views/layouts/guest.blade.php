@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>@yield('title', 'SIKEU PIPMARSI')</title>
+    <title>@yield('title', 'SIPANDA PIPMARSI')</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-pipmarsi.png') }}">
 
     {{-- Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -11,7 +11,7 @@ class TransaksiRepository
     public function paginate(
         int $tahunAnggaranId,
         array $filters = [],
-        int $perPage = 15
+        int $perPage = 25
     ): LengthAwarePaginator {
         return Transaksi::query()
             ->with(['tahunAnggaran', 'bidangKerja', 'transaksable', 'user'])

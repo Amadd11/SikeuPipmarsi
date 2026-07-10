@@ -63,7 +63,6 @@ class RencanaPengeluaranSeeder extends Seeder
                 'nama_kegiatan' => 'Bakti Sosial',
                 'jumlah_anggaran' => 4000000,
                 'jumlah_realisasi' => 0,
-                'keterangan' => 'Kegiatan pengabdian kepada masyarakat.',
             ],
         ];
 
@@ -76,7 +75,6 @@ class RencanaPengeluaranSeeder extends Seeder
                 'nama_kegiatan'          => $item['nama_kegiatan'],
                 'jumlah_anggaran'        => $item['jumlah_anggaran'],
                 'jumlah_realisasi'       => $item['jumlah_realisasi'],
-                'keterangan'             => $item['keterangan'],
             ]);
         }
     }

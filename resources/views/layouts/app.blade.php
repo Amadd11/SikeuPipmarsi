@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>{{ config('app.name', 'SIKEU PIPMARSI') }} — {{ $title ?? 'Dashboard' }}</title>
+    <title>{{ config('app.name', 'SIPANDA PIPMARSI') }} | {{ $title ?? 'Dashboard' }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-pipmarsi.png') }}">
 
     {{-- Poppins Font --}}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
@@ -14,30 +15,11 @@
     {{-- Material Icons --}}
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
 
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #0a2419;
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-    </style>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @stack('styles')
 </head>
 
 <body class="bg-[#f6f7f9] antialiased text-gray-800">
@@ -122,6 +104,7 @@
         </div>
     @endif
 
+    @stack('scripts')
 </body>
 
 </html>

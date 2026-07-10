@@ -1,18 +1,38 @@
 @import "tailwindcss";
+@import "tom-select/dist/css/tom-select.css";
+
+/* Tom Select Custom Theme Overrides */
+.ts-control {
+    border-radius: 0.75rem !important; /* rounded-xl */
+    border-color: #e5e7eb !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.875rem !important;
+    box-shadow: none !important;
+    background-color: #ffffff !important;
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+}
+.ts-control.focus {
+    border-color: #0a2419 !important; /* primary color */
+    box-shadow: 0 0 0 2px rgba(10, 36, 25, 0.2) !important;
+}
+.ts-dropdown {
+    border-radius: 0.75rem !important;
+    border-color: #e5e7eb !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    font-size: 0.875rem !important;
+}
+.ts-wrapper.single .ts-control:after {
+    border-color: #9ca3af transparent transparent transparent !important;
+}
 
 @theme {
-    /* Primary tetap ungu untuk link, focus, dll */
     --color-primary: #9333ea;
     --color-primary-dark: #7e22ce;
-
-    /* Sidebar ungu gelap */
     --color-sidebar: #4c1d95;
-
-    /* Warna utama tombol */
     --color-gold: #FACE68;
     --color-gold-dark: #eab308;
-
-    /* Warna aksen */
     --color-accent-red: #ef4444;
 }
 
@@ -27,4 +47,27 @@
 
 [x-cloak] {
     display: none !important;
+}
+
+/* Global Typography & Base Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #0a2419;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
 }

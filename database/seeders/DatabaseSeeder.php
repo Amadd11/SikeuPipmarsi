@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             KategoriPengeluaranSeeder::class,
             RencanaPendapatanSeeder::class,
             RencanaPengeluaranSeeder::class,
+            AuditMonitoringSeeder::class,
+            // TransaksiSeeder::class,
             UserSeeder::class,
         ]);
     }
