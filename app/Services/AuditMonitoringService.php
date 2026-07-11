@@ -15,7 +15,7 @@ class AuditMonitoringService
         protected AuditMonitoringRepository $repository
     ) {}
 
-    public function getList(array $filters = [], int $perPage = 15): LengthAwarePaginator
+    public function getList(array $filters = [], int $perPage = 10): LengthAwarePaginator
     {
         return $this->repository->getList(
             tahunAnggaranId: $filters['tahun_anggaran_id'] ?? null,

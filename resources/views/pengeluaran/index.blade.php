@@ -286,11 +286,7 @@
         </div>
 
         {{-- Pagination --}}
-        @if ($pengeluaran->hasPages())
-            <div class="px-5 py-3 border-t border-gray-100 text-xs bg-gray-50/30">
-                {{ $pengeluaran->appends(request()->query())->links() }}
-            </div>
-        @endif
+        <x-pagination :paginator="$pengeluaran" />
 
     </div>
 

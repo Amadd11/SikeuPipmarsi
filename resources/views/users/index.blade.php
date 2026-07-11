@@ -189,11 +189,7 @@
         </div>
 
         {{-- Pagination --}}
-        @if ($userList->hasPages())
-            <div class="px-5 py-3 border-t border-gray-100 text-xs bg-gray-50/30">
-                {{ $userList->appends(request()->query())->links() }}
-            </div>
-        @endif
+        <x-pagination :paginator="$userList" />
 
     </div>
 

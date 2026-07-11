@@ -45,6 +45,8 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'role:super_admin'])->group(function () {
     Route::resource('users', UserController::class)->except('show');
     Route::resource('bidang-kerja', BidangKerjaController::class)->except('show');
+    Route::resource('kategori-pendapatan', App\Http\Controllers\KategoriPendapatanController::class)->except('show');
+    Route::resource('kategori-pengeluaran', App\Http\Controllers\KategoriPengeluaranController::class)->except('show');
 });
 
 Route::middleware('auth')->group(function () {

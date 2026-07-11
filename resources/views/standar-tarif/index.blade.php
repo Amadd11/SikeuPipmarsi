@@ -185,11 +185,7 @@
         </div>
 
         {{-- Pagination --}}
-        @if ($tarifList->hasPages())
-            <div class="px-5 py-3 border-t border-gray-100 text-xs bg-gray-50/30">
-                {{ $tarifList->appends(request()->query())->links() }}
-            </div>
-        @endif
+        <x-pagination :paginator="$tarifList" />
 
     </div>
 

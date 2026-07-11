@@ -14,7 +14,7 @@ class AuditMonitoringRepository
         ?int $tahunAnggaranId = null,
         ?int $indikatorMutuId = null,
         ?string $search = null,
-        int $perPage = 15
+        int $perPage = 10
     ): LengthAwarePaginator {
 
         return AuditMonitoring::query()

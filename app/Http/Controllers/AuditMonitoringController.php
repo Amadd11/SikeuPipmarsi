@@ -29,7 +29,7 @@ class AuditMonitoringController extends Controller
 
         // Tidak ada tahun anggaran — tampilkan halaman kosong
         if (! $tahunAnggaranId) {
-            $emptyPaginator = new LengthAwarePaginator(new Collection(), 0, 15);
+            $emptyPaginator = new LengthAwarePaginator(new Collection(), 0, 10);
 
             return view('audit-monitoring.index', [
                 'auditList'         => $emptyPaginator,

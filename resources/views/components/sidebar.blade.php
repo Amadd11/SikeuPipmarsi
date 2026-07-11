@@ -25,14 +25,13 @@
             </div>
 
             <div class="leading-none">
-                <span class="text-xl font-black text-white">SIPANDA</span>
-                <span class="text-xl font-black text-gold">PIPMARSI</span>
+                <span class="text-lg font-black text-white">SIPANDA</span>
+                <span class="text-lg font-black text-gold">PIPMARSI</span>
             </div>
         </div>
 
-        <p class="text-[10px] text-indigo-200/50 mt-1.5 tracking-[0.15em] font-medium">
-            SISTEM INFORMASI PENGELOLAAN DANA & AKUNTABILITAS PIPMARSI
-        </p>
+        <p class="text-xs text-indigo-200/50 mt-1.5  font-medium">
+            Sistem Informasi Pengelolaan Dana & Akuntabilitas PIPMARSI </p>
 
         <div
             class="mt-3 inline-flex items-center gap-1.5 bg-gold/10 border border-gold/10 text-gold text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-sm">
@@ -98,8 +97,14 @@
                 <x-nav-link href="{{ route('users.index') }}" icon="manage_accounts" :active="request()->routeIs('users.*')">
                     Manajemen User
                 </x-nav-link>
-                <x-nav-link href="{{ route('bidang-kerja.index') }}" icon="category" :active="request()->routeIs('bidang-kerja.*')">
+                <x-nav-link href="{{ route('bidang-kerja.index') }}" icon="domain" :active="request()->routeIs('bidang-kerja.*')">
                     Bidang Kerja
+                </x-nav-link>
+                <x-nav-link href="{{ route('kategori-pendapatan.index') }}" icon="account_tree" :active="request()->routeIs('kategori-pendapatan.*')">
+                    Kategori Pendapatan
+                </x-nav-link>
+                <x-nav-link href="{{ route('kategori-pengeluaran.index') }}" icon="account_tree" :active="request()->routeIs('kategori-pengeluaran.*')">
+                    Kategori Pengeluaran
                 </x-nav-link>
             </div>
         @endrole

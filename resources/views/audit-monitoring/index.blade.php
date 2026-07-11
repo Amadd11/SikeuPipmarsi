@@ -279,11 +279,7 @@
         </div>
 
         {{-- Pagination --}}
-        @if ($auditList->hasPages())
-            <div class="px-5 py-3 border-t border-gray-100 text-xs bg-gray-50/30">
-                {{ $auditList->appends(request()->query())->links() }}
-            </div>
-        @endif
+        <x-pagination :paginator="$auditList" />
 
     </div>
 

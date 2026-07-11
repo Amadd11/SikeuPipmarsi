@@ -16,7 +16,19 @@
     </div>
 
     {{-- Info Kanan --}}
-    <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+    <div class="flex items-center gap-2 sm:gap-4 shrink-0">
+        {{-- Jam Live --}}
+        <div x-data="{ time: '' }" 
+             x-init="
+                const updateTime = () => { time = new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute: '2-digit', second: '2-digit'}) };
+                updateTime();
+                setInterval(updateTime, 1000);
+             "
+             class="hidden md:flex items-center gap-1.5 text-gray-500 bg-white shadow-sm border border-gray-100 px-3 py-1.5 rounded-full">
+            <span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+            <span class="text-sm font-semibold tracking-wider mt-0.5" x-text="time"></span>
+        </div>
+
         {{-- Sembunyikan label TA di HP agar tidak terlalu sempit --}}
         <span
             class="hidden sm:inline-block px-3 sm:px-4 py-1.5 bg-sidebar text-white text-xs sm:text-sm font-semibold rounded-full">
