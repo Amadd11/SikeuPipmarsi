@@ -4,6 +4,8 @@ use App\Http\Controllers\AuditMonitoringController;
 use App\Http\Controllers\BidangKerjaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndikatorMutuController;
+use App\Http\Controllers\KategoriPendapatanController;
+use App\Http\Controllers\KategoriPengeluaranController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekapitulasiController;
@@ -13,6 +15,8 @@ use App\Http\Controllers\StandarTarifController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -44,9 +48,12 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'role:super_admin'])->group(function () {
     Route::resource('users', UserController::class)->except('show');
+});
+
+Route::middleware(['auth', 'role:super_admin|pengurus_inti'])->group(function () {
     Route::resource('bidang-kerja', BidangKerjaController::class)->except('show');
-    Route::resource('kategori-pendapatan', App\Http\Controllers\KategoriPendapatanController::class)->except('show');
-    Route::resource('kategori-pengeluaran', App\Http\Controllers\KategoriPengeluaranController::class)->except('show');
+    Route::resource('kategori-pendapatan', KategoriPendapatanController::class)->except('show');
+    Route::resource('kategori-pengeluaran', KategoriPengeluaranController::class)->except('show');
 });
 
 Route::middleware('auth')->group(function () {

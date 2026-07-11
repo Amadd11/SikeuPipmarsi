@@ -88,15 +88,17 @@
             </x-nav-link>
         </div>
 
-        {{-- ADMINISTRASI (Super Admin Only) --}}
-        @role('super_admin')
+        {{-- ADMINISTRASI --}}
+        @hasanyrole('super_admin|pengurus_inti')
             <div>
                 <p class="px-4 mb-3 text-[10px] font-bold tracking-[0.2em] uppercase text-indigo-300/40">
                     Administrasi
                 </p>
+                @role('super_admin')
                 <x-nav-link href="{{ route('users.index') }}" icon="manage_accounts" :active="request()->routeIs('users.*')">
                     Manajemen User
                 </x-nav-link>
+                @endrole
                 <x-nav-link href="{{ route('bidang-kerja.index') }}" icon="domain" :active="request()->routeIs('bidang-kerja.*')">
                     Bidang Kerja
                 </x-nav-link>
@@ -107,7 +109,7 @@
                     Kategori Pengeluaran
                 </x-nav-link>
             </div>
-        @endrole
+        @endhasanyrole
     </nav>
 
     {{-- LOGOUT --}}

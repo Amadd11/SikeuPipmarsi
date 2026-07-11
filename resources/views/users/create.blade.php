@@ -129,7 +129,11 @@
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="material-symbols-outlined text-[14px] text-emerald-500 mt-0.5 shrink-0">account_balance_wallet</span>
-                        <span><strong>Bendahara</strong> — akses ke modul keuangan, indikator, dan laporan.</span>
+                        <span><strong>Pengurus Inti</strong> — akses ke modul keuangan, master kategori, indikator, dan laporan.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-[14px] text-amber-500 mt-0.5 shrink-0">group</span>
+                        <span><strong>Pengurus Harian</strong> — akses ke modul keuangan, indikator, dan laporan (kecuali master kategori).</span>
                     </li>
                 </ul>
             </div>

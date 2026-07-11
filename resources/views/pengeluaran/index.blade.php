@@ -80,13 +80,18 @@
         {{-- Tab per Bidang --}}
         @foreach ($semuaBidang as $bidang)
             <a href="{{ route('pengeluaran.index', ['tahun' => $activeTahun, 'bidang' => $bidang->id]) }}"
-                class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-{{ $activeBidang === $bidang->id ? 'semibold' : 'medium' }}
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-{{ $activeBidang === $bidang->id ? 'semibold' : 'medium' }}
                     {{ $activeBidang === $bidang->id ? 'bg-gold text-gray-900 shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-gray-900' }}
                     transition-colors">
-                <span
-                    class="material-symbols-outlined text-[16px] {{ $activeBidang === $bidang->id ? '' : 'text-gray-400' }}">
-                    {{ $bidang->icon ?? 'domain' }}
-                </span>
+                
+                @if($bidang->warna_hex)
+                    <div class="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm" style="background-color: {{ $bidang->warna_hex }};"></div>
+                @else
+                    <span class="material-symbols-outlined text-[16px] {{ $activeBidang === $bidang->id ? '' : 'text-gray-400' }}">
+                        {{ $bidang->icon ?? 'domain' }}
+                    </span>
+                @endif
+                
                 {{ $bidang->nama }}
             </a>
         @endforeach
@@ -166,7 +171,7 @@
 
                             {{-- Kegiatan --}}
                             <td class="px-4 py-2.5 align-top">
-                                <div class="flex flex-col">
+                                <div class="flex flex-col items-start gap-1">
                                     <span class="font-semibold text-gray-900 leading-tight">
                                         {{ $item->nama_kegiatan }}
                                     </span>

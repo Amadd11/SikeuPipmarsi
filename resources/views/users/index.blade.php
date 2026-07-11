@@ -3,14 +3,16 @@
 
     {{-- Flash Messages --}}
     @if (session('success'))
-        <div class="mb-4 px-4 py-3 rounded-xl bg-green-50 border border-green-100 text-green-700 text-xs flex items-center gap-2">
+        <div
+            class="mb-4 px-4 py-3 rounded-xl bg-green-50 border border-green-100 text-green-700 text-xs flex items-center gap-2">
             <span class="material-symbols-outlined text-[16px]">check_circle</span>
             {{ session('success') }}
         </div>
     @endif
 
     @if ($errors->has('general'))
-        <div class="mb-4 px-4 py-3 rounded-xl bg-red-50 border border-red-100 text-red-600 text-xs flex items-center gap-2">
+        <div
+            class="mb-4 px-4 py-3 rounded-xl bg-red-50 border border-red-100 text-red-600 text-xs flex items-center gap-2">
             <span class="material-symbols-outlined text-[16px]">error</span>
             {{ $errors->first('general') }}
         </div>
@@ -35,15 +37,16 @@
     <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 mb-5">
         <form method="GET" action="{{ route('users.index') }}" class="flex items-end gap-3">
             <div class="flex-1">
-                <label class="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Cari User</label>
-                <input type="text" name="search" value="{{ $search ?? '' }}"
-                    placeholder="Nama atau email..."
+                <label class="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Cari
+                    User</label>
+                <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Nama atau email..."
                     class="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none">
             </div>
             <div class="flex gap-2">
                 <button type="submit"
                     class="inline-flex items-center gap-1.5 bg-gold text-gray-900 px-4 py-2 rounded-full text-xs font-semibold shadow-sm hover:bg-gold-dark hover:shadow transition-all duration-200 active:scale-95">
-                    <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1">search</span>
+                    <span class="material-symbols-outlined text-[16px]"
+                        style="font-variation-settings: 'FILL' 1">search</span>
                     Cari
                 </button>
                 @if ($search)
@@ -69,7 +72,8 @@
                         Menampilkan {{ $userList->total() }} user terdaftar.
                     </p>
                 </div>
-                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 border border-indigo-100 text-indigo-600 text-[10px] font-semibold rounded-lg">
+                <span
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 border border-indigo-100 text-indigo-600 text-[10px] font-semibold rounded-lg">
                     <span class="material-symbols-outlined text-[13px]">shield</span>
                     Super Admin Only
                 </span>
@@ -80,7 +84,8 @@
         <div class="overflow-x-auto">
             <table class="w-full text-xs">
                 <thead>
-                    <tr class="bg-gray-50 text-[10px] uppercase tracking-widest text-gray-500 font-semibold border-b border-gray-100">
+                    <tr
+                        class="bg-gray-50 text-[10px] uppercase tracking-widest text-gray-500 font-semibold border-b border-gray-100">
                         <th class="px-4 py-2.5 text-center w-10">#</th>
                         <th class="px-4 py-2.5 text-left">Nama</th>
                         <th class="px-4 py-2.5 text-left">Email</th>
@@ -103,12 +108,15 @@
                             {{-- Nama --}}
                             <td class="px-4 py-3 align-middle">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                                        <span class="text-primary font-bold text-[11px]">{{ strtoupper(substr($item->name, 0, 1)) }}</span>
+                                    <div
+                                        class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                                        <span
+                                            class="text-primary font-bold text-[11px]">{{ strtoupper(substr($item->name, 0, 1)) }}</span>
                                     </div>
                                     <span class="font-medium text-gray-900">{{ $item->name }}</span>
                                     @if ($item->id === auth()->id())
-                                        <span class="text-[9px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full font-semibold">Anda</span>
+                                        <span
+                                            class="text-[9px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full font-semibold">Anda</span>
                                     @endif
                                 </div>
                             </td>
@@ -122,17 +130,27 @@
                             <td class="px-4 py-3 text-center align-middle">
                                 @php $role = $item->roles->first()?->name; @endphp
                                 @if ($role === 'super_admin')
-                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-indigo-50 border border-indigo-100 text-indigo-700 text-[10px] font-bold rounded-lg">
-                                        <span class="material-symbols-outlined text-[12px]">admin_panel_settings</span>
+                                    <span
+                                        class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-indigo-50 border border-indigo-100 text-indigo-700 text-[10px] font-semibold rounded-lg leading-none">
+                                        <span
+                                            class="material-symbols-outlined text-[13px] leading-none">admin_panel_settings</span>
                                         Super Admin
                                     </span>
-                                @elseif ($role === 'bendahara')
-                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-50 border border-emerald-100 text-emerald-700 text-[10px] font-bold rounded-lg">
-                                        <span class="material-symbols-outlined text-[12px]">account_balance_wallet</span>
-                                        Bendahara
+                                @elseif ($role === 'pengurus_inti')
+                                    <span
+                                        class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-50 border border-emerald-100 text-emerald-700 text-[10px] font-semibold rounded-lg leading-none">
+                                        <span
+                                            class="material-symbols-outlined text-[13px] leading-none">account_balance_wallet</span>
+                                        Pengurus Inti
+                                    </span>
+                                @elseif ($role === 'pengurus_harian')
+                                    <span
+                                        class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 border border-amber-100 text-amber-700 text-[10px] font-semibold rounded-lg leading-none">
+                                        <span class="material-symbols-outlined text-[13px] leading-none">group</span>
+                                        Pengurus Harian
                                     </span>
                                 @else
-                                    <span class="text-gray-300">—</span>
+                                    <span class="text-gray-300 text-xs">—</span>
                                 @endif
                             </td>
 

@@ -26,7 +26,11 @@ class UserController extends Controller
 
     public function create(): View
     {
-        $roles = ['super_admin' => 'Super Admin', 'bendahara' => 'Bendahara'];
+        $roles = [
+            'super_admin' => 'Super Admin',
+            'pengurus_inti' => 'Pengurus Inti',
+            'pengurus_harian' => 'Pengurus Harian'
+        ];
 
         return view('users.create', compact('roles'));
     }
@@ -48,7 +52,11 @@ class UserController extends Controller
 
     public function edit(User $user): View
     {
-        $roles       = ['super_admin' => 'Super Admin', 'bendahara' => 'Bendahara'];
+        $roles = [
+            'super_admin' => 'Super Admin',
+            'pengurus_inti' => 'Pengurus Inti',
+            'pengurus_harian' => 'Pengurus Harian'
+        ];
         $currentRole = $user->roles->first()?->name ?? '';
 
         return view('users.edit', compact('user', 'roles', 'currentRole'));

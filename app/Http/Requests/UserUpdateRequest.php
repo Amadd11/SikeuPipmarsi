@@ -24,7 +24,7 @@ class UserUpdateRequest extends FormRequest
             'email'                 => ['required', 'email', 'max:255', "unique:users,email,{$userId}"],
             'password'              => ['nullable', 'string', 'min:8', 'confirmed'],
             'password_confirmation' => ['nullable', 'string'],
-            'role'                  => ['required', 'string', 'in:super_admin,bendahara'],
+            'role'                  => ['required', 'string', 'in:super_admin,pengurus_inti,pengurus_harian'],
         ];
     }
 

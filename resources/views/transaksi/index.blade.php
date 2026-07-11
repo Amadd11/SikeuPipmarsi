@@ -99,7 +99,7 @@
                         <th class="px-4 py-2.5 text-center w-10">#</th>
                         <th class="px-4 py-2.5">Tanggal</th>
                         <th class="px-4 py-2.5">Kode</th>
-                        <th class="px-4 py-2.5 min-w-[200px]">Uraian</th>
+                        <th class="px-4 py-2.5 min-w-50">Uraian</th>
                         <th class="px-4 py-2.5">Bidang</th>
                         <th class="px-4 py-2.5 text-center">Jenis</th>
                         <th class="px-4 py-2.5 text-right">Jumlah (Rp)</th>

@@ -134,8 +134,8 @@
                 <div class="text-xs text-gray-500 space-y-1.5 border-t border-gray-100 pt-3">
                     <p>
                         <span class="font-medium text-gray-700">Role saat ini:</span>
-                        <span class="ml-1 {{ $currentRole === 'super_admin' ? 'text-indigo-600' : 'text-emerald-600' }} font-semibold">
-                            {{ $currentRole === 'super_admin' ? 'Super Admin' : ($currentRole === 'bendahara' ? 'Bendahara' : '—') }}
+                        <span class="ml-1 {{ $currentRole === 'super_admin' ? 'text-indigo-600' : ($currentRole === 'pengurus_inti' ? 'text-emerald-600' : 'text-amber-600') }} font-semibold">
+                            {{ $currentRole === 'super_admin' ? 'Super Admin' : ($currentRole === 'pengurus_inti' ? 'Pengurus Inti' : ($currentRole === 'pengurus_harian' ? 'Pengurus Harian' : '—')) }}
                         </span>
                     </p>
                     <p>

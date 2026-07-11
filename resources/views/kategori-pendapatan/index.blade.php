@@ -118,7 +118,7 @@
                                         <span class="material-symbols-outlined text-gray-400 text-2xl">category</span>
                                     </div>
                                     <h3 class="text-sm font-semibold text-gray-800">Belum ada kategori</h3>
-                                    <p class="text-xs text-gray-500 max-w-[250px]">
+                                    <p class="text-xs text-gray-500 max-w-62.5">
                                         Silakan tambah kategori pendapatan pertama Anda.
                                     </p>
                                 </div>

@@ -12,7 +12,8 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $superAdminRole = Role::firstOrCreate(['name' => 'super_admin']);
-        $bendaharaRole  = Role::firstOrCreate(['name' => 'bendahara']);
+        $pengurusIntiRole   = Role::firstOrCreate(['name' => 'pengurus_inti']);
+        $pengurusHarianRole = Role::firstOrCreate(['name' => 'pengurus_harian']);
 
         $superAdmin = User::firstOrCreate(
             ['email' => 'superadmin@pipmarsi.id'],
@@ -23,13 +24,22 @@ class UserSeeder extends Seeder
         );
         $superAdmin->assignRole($superAdminRole);
 
-        $bendahara = User::firstOrCreate(
-            ['email' => 'bendahara@pipmarsi.id'],
+        $pengurusInti = User::firstOrCreate(
+            ['email' => 'pengurus.inti@pipmarsi.id'],
             [
-                'name' => 'Bendahara',
+                'name' => 'Pengurus Inti',
                 'password' => Hash::make('password'),
             ]
         );
-        $bendahara->assignRole($bendaharaRole);
+        $pengurusInti->assignRole($pengurusIntiRole);
+
+        $pengurusHarian = User::firstOrCreate(
+            ['email' => 'pengurus.harian@pipmarsi.id'],
+            [
+                'name' => 'Pengurus Harian',
+                'password' => Hash::make('password'),
+            ]
+        );
+        $pengurusHarian->assignRole($pengurusHarianRole);
     }
 }
